@@ -7,8 +7,6 @@ package:
 source:
   url: https://pypi.io/packages/source/g/gym/gym-{{ version }}.tar.gz
   sha256: bb495aa56995b01274a2213423bf5ba05b8f4fd51c6dc61e9d4abddd1189718e
-  patches:
-    - patches/0001-comment-out-requires-in-setup.py.patch
 
 build:
   number: 0
