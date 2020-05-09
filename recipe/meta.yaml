@@ -1,4 +1,4 @@
-{% set version = "0.17.1" %}
+{% set version = "0.17.2" %}
 
 package:
   name: gym
@@ -6,9 +6,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/g/gym/gym-{{ version }}.tar.gz
-  sha256: 9cff7061e54a53d359af51ad6ec62a44b4bf374ca2cdce35bfee47a93506bcf8
-  patches:
-    - patches/0001-comment-out-requires-in-setup.py.patch
+  sha256: bb495aa56995b01274a2213423bf5ba05b8f4fd51c6dc61e9d4abddd1189718e
 
 build:
   number: 0
@@ -51,7 +49,7 @@ outputs:
     build:
       # needs to be excluded because dependency mujoco has
       # non-compatible license, see below; atari_py missing on win.
-      skip: True
+      skip: true
     requirements:
       host:
         - python
@@ -70,7 +68,7 @@ outputs:
     build:
       # atari_py does not build for windows (yet):
       # https://github.com/conda-forge/atari_py-feedstock/issues/3
-      skip: True  # [win]
+      skip: true  # [win]
     requirements:
       host:
         - python
@@ -112,7 +110,7 @@ outputs:
     build:
       # mujoco-py cannot be packaged for license reasons, see
       # https://github.com/openai/mujoco-py#install-mujoco
-      skip: True
+      skip: true
     requirements:
       host:
         - python
@@ -129,7 +127,7 @@ outputs:
     build:
       # mujoco-py cannot be packaged for license reasons, see
       # https://github.com/openai/mujoco-py#install-mujoco
-      skip: True
+      skip: true
     requirements:
       host:
         - python
