@@ -5,9 +5,13 @@ Home: https://github.com/openai/gym
 
 Package license: MIT
 
-Feedstock license: BSD-3-Clause
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/gym-feedstock/blob/master/LICENSE.txt)
 
 Summary: The OpenAI Gym: A toolkit for developing and comparing your reinforcement learning agents.
+
+Development: https://github.com/openai/gym
+
+Documentation: https://gym.openai.com/docs/
 
 The OpenAI Gym: A toolkit for developing and comparing your reinforcement learning agents.
 
