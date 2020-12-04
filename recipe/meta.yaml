@@ -52,7 +52,7 @@ outputs:
         - {{ pin_subpackage('gym-atari', exact=True) }}
         - {{ pin_subpackage('gym-box2d', exact=True) }}
         - {{ pin_subpackage('gym-classic_control', exact=True) }}
-        # exclude some packages because thri dependency (mujoco) has
+        # exclude some packages because their dependency (mujoco) has
         # incompatible license, see below
         #- {{ pin_subpackage('gym-mujoco', exact=True) }}
         #- {{ pin_subpackage('gym-robotics', exact=True) }}
