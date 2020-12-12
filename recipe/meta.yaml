@@ -28,13 +28,13 @@ outputs:
         - pip
         - cloudpickle >=1.2.0,<1.7.0
         - numpy
-        - pyglet >=1.4.0,<=1.5.0
+        - pyglet >=1.4.0
         - scipy
       run:
         - python
         - cloudpickle >=1.2.0,<1.7.0
         - numpy
-        - pyglet >=1.4.0,<=1.5.0
+        - pyglet >=1.4.0
         - scipy
     test:
       requires:
