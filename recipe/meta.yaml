@@ -30,6 +30,7 @@ outputs:
         - pip
         - cloudpickle >=1.2.0,<1.7.0
         - numpy
+        - pillow
         - pyglet >=1.4.0
         - scipy
       run:
@@ -70,8 +71,7 @@ outputs:
         - python
         - {{ pin_subpackage('gym', exact=True) }}
         - atari_py ==0.2.6
-        - opencv
-        - pillow
+        - opencv >=3.0
     test:
       imports:
         - gym.envs.atari
