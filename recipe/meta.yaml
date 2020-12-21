@@ -7,6 +7,8 @@ package:
 source:
   url: https://pypi.io/packages/source/g/gym/gym-{{ version }}.tar.gz
   sha256: a0dcd25c1373f3938f4cb4565f74f434fba6faefb73a42d09c9dddd0c08af53e
+  patches:
+    - patches/0001-remove-install-requires.patch
 
 build:
   number: 0
