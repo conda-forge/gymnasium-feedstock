@@ -1,4 +1,4 @@
-{% set version = "0.19.0" %}
+{% set version = "0.21.0" %}
 
 package:
   name: gym
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/g/gym/gym-{{ version }}.tar.gz
-  sha256: 940069b983806e1ccc400fa6d47b4e34e462accf6a4fb0acb0a5e509ad0f502d
+  sha256: 0fd1ce165c754b4017e37a617b097c032b8c3feb8a0394ccc8777c7c50dddff3
 
 build:
   number: 0
@@ -30,23 +30,21 @@ outputs:
       host:
         - python
         - pip
-        - cloudpickle >=1.2.0,<1.7.0
+        - cloudpickle >=1.2.0
         - numpy
-        - pillow
-        - pyglet >=1.4.0
-        - scipy
       run:
         - python
-        - cloudpickle >=1.2.0,<1.7.0
+        - cloudpickle >=1.2.0
         - numpy
-        - pyglet >=1.4.0
-        - scipy
+        - importlib_metadata >=4.8.1  # [py<38]
     test:
       requires:
         - mock
         - pytest
       imports:
         - gym
+      commands:
+        # TODO: run test suite
 
   - name: gym-all
     requirements:
@@ -54,26 +52,34 @@ outputs:
         - python
       run:
         - python
-        - {{ pin_subpackage('gym-atari', exact=True) }}
+        # exclude gym-atari package because the Atari-Py dependency
+        # has been replaced with ALE-py which has not yet been
+        # packaged in conda-forge, see conda-forge/staged-recipes#16488
+        # - {{ pin_subpackage('gym-atari', exact=True) }}
         - {{ pin_subpackage('gym-box2d', exact=True) }}
         - {{ pin_subpackage('gym-classic_control', exact=True) }}
         # exclude some packages because their dependency (mujoco) has
         # incompatible license, see below
         #- {{ pin_subpackage('gym-mujoco', exact=True) }}
         #- {{ pin_subpackage('gym-robotics', exact=True) }}
+        - {{ pin_subpackage('gym-toy_text', exact=True) }}
+        - {{ pin_subpackage('gym-other', exact=True) }}
     test:
       imports:
         - gym
 
   - name: gym-atari
+    build:
+      # the Atari-Py dependency has been replaced with ALE-Py
+      # which has not yet been packaged in conda-forge
+      skip: true
     requirements:
       host:
         - python
       run:
         - python
         - {{ pin_subpackage('gym', exact=True) }}
-        - atari_py ==0.2.6
-        - opencv >=3.0
+        - ale-py >=0.7.1,<0.8
     test:
       imports:
         - gym.envs.atari
@@ -86,6 +92,7 @@ outputs:
         - python
         - {{ pin_subpackage('gym', exact=True) }}
         - box2d-py ==2.3.8
+        - pyglet >=1.4.0
     test:
       imports:
         - gym.envs.box2d
@@ -96,6 +103,7 @@ outputs:
         - python
       run:
         - python
+        - pyglet >=1.4.0
         - {{ pin_subpackage('gym', exact=True) }}
         # no extra dependencies for this combination
     test:
@@ -135,6 +143,43 @@ outputs:
     test:
       imports:
         - gym.envs.robotics
+
+  - name: gym-toy_text
+    requirements:
+      host:
+        - python
+      run:
+        - python
+        - {{ pin_subpackage('gym', exact=True) }}
+        - scipy >=1.4.1
+    test:
+      imports:
+        - gym.envs.toy_text
+
+  - name: gym-other
+    requirements:
+      host:
+        - python
+      run:
+        - python
+        - {{ pin_subpackage('gym', exact=True) }}
+        - lz4 >=3.1.0
+        - opencv >=3.0
+    test:
+      imports:
+        # There are no tests in the source code for gym-other
+
+  # - name: gym-accept-rom-license
+  #   requirements:
+  #     host:
+  #       - python
+  #     run:
+  #       - python
+  #       - {{ pin_subpackage('gym', exact=True) }}
+  #       - autorom[accept-rom-license] ~=0.4.2
+  #   test:
+  #     imports:
+  #       # There are no tests in the source code for gym-accept-rom-license
 
 about:
   home: https://github.com/openai/gym
