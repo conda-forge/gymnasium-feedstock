@@ -30,23 +30,21 @@ outputs:
       host:
         - python
         - pip
-        - cloudpickle >=1.2.0,<1.7.0
+        - cloudpickle >=1.2.0
         - numpy
-        - pillow
-        - pyglet >=1.4.0
-        - scipy
       run:
         - python
-        - cloudpickle >=1.2.0,<1.7.0
+        - cloudpickle >=1.2.0
         - numpy
-        - pyglet >=1.4.0
-        - scipy
+        - importlib_metadata >=4.8.1  # [py<38]
     test:
       requires:
         - mock
         - pytest
       imports:
         - gym
+      commands:
+        # TODO: run test suite
 
   - name: gym-all
     requirements:
@@ -64,6 +62,8 @@ outputs:
         # incompatible license, see below
         #- {{ pin_subpackage('gym-mujoco', exact=True) }}
         #- {{ pin_subpackage('gym-robotics', exact=True) }}
+        - {{ pin_subpackage('gym-toy_text', exact=True) }}
+        - {{ pin_subpackage('gym-other', exact=True) }}
     test:
       imports:
         - gym
@@ -79,8 +79,7 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('gym', exact=True) }}
-        - atari_py ==0.2.6
-        - opencv >=3.0
+        - ale-py >=0.7.1,<0.8
     test:
       imports:
         - gym.envs.atari
@@ -165,7 +164,7 @@ outputs:
         - python
         - {{ pin_subpackage('gym', exact=True) }}
         - lz4 >=3.1.0
-        - opencv-python >=3.0
+        - opencv >=3.0
     test:
       imports:
         # There are no tests in the source code for gym-other
