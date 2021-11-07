@@ -170,17 +170,17 @@ outputs:
       imports:
         # There are no tests in the source code for gym-other
 
-  - name: gym-accept-rom-license
-    requirements:
-      host:
-        - python
-      run:
-        - python
-        - {{ pin_subpackage('gym', exact=True) }}
-        - autorom[accept-rom-license] ~=0.4.2
-    test:
-      imports:
-        # There are no tests in the source code for gym-accept-rom-license
+  # - name: gym-accept-rom-license
+  #   requirements:
+  #     host:
+  #       - python
+  #     run:
+  #       - python
+  #       - {{ pin_subpackage('gym', exact=True) }}
+  #       - autorom[accept-rom-license] ~=0.4.2
+  #   test:
+  #     imports:
+  #       # There are no tests in the source code for gym-accept-rom-license
 
 about:
   home: https://github.com/openai/gym
