@@ -9,7 +9,7 @@ source:
   sha256: 0fd1ce165c754b4017e37a617b097c032b8c3feb8a0394ccc8777c7c50dddff3
 
 build:
-  number: 1
+  number: 2
 
 # Need these up here for conda-smithy to handle them properly.
 requirements:
@@ -25,7 +25,7 @@ requirements:
 outputs:
   - name: gym
     build:
-      script: {{ PYTHON }} -m pip install . -vv
+      script: {{ PYTHON }} -m pip install . -vv --no-deps
     requirements:
       host:
         - python
