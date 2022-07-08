@@ -1,4 +1,4 @@
-{% set version = "0.21.0" %}
+{% set version = "0.24.0" %}
 
 package:
   name: gym
@@ -6,10 +6,10 @@ package:
 
 source:
   url: https://pypi.io/packages/source/g/gym/gym-{{ version }}.tar.gz
-  sha256: 0fd1ce165c754b4017e37a617b097c032b8c3feb8a0394ccc8777c7c50dddff3
+  sha256: 69f96424be40d23088be978b61f45c23911e2ccddafad08cf2fac608e8bd86e4
 
 build:
-  number: 2
+  number: 0
 
 # Need these up here for conda-smithy to handle them properly.
 requirements:
@@ -36,7 +36,7 @@ outputs:
         - python
         - cloudpickle >=1.2.0
         - numpy
-        - importlib_metadata >=4.8.1  # [py<38]
+        - importlib_metadata >=4.8.1  # [py<=39]
     test:
       requires:
         - mock
@@ -58,10 +58,7 @@ outputs:
         # - {{ pin_subpackage('gym-atari', exact=True) }}
         - {{ pin_subpackage('gym-box2d', exact=True) }}
         - {{ pin_subpackage('gym-classic_control', exact=True) }}
-        # exclude some packages because their dependency (mujoco) has
-        # incompatible license, see below
-        #- {{ pin_subpackage('gym-mujoco', exact=True) }}
-        #- {{ pin_subpackage('gym-robotics', exact=True) }}
+        - {{ pin_subpackage('gym-mujoco', exact=True) }}
         - {{ pin_subpackage('gym-toy_text', exact=True) }}
         - {{ pin_subpackage('gym-other', exact=True) }}
     test:
@@ -111,38 +108,17 @@ outputs:
         - gym.envs.classic_control
 
   - name: gym-mujoco
-    build:
-      # mujoco-py cannot be packaged for license reasons, see
-      # https://github.com/openai/mujoco-py#install-mujoco
-      skip: true
     requirements:
       host:
         - python
       run:
         - python
         - {{ pin_subpackage('gym', exact=True) }}
-        - mujoco-py >=1.50,<2.0
+        - mujoco-python
         - imageio
     test:
       imports:
         - gym.envs.mujoco
-
-  - name: gym-robotics
-    build:
-      # mujoco-py cannot be packaged for license reasons, see
-      # https://github.com/openai/mujoco-py#install-mujoco
-      skip: true
-    requirements:
-      host:
-        - python
-      run:
-        - python
-        - {{ pin_subpackage('gym', exact=True) }}
-        - mujoco-py >=1.50,<2.0
-        - imageio
-    test:
-      imports:
-        - gym.envs.robotics
 
   - name: gym-toy_text
     requirements:
