@@ -41,9 +41,11 @@ outputs:
       requires:
         - mock
         - pytest
+        - pip
       imports:
         - gym
       commands:
+        - pip check
         # TODO: run test suite
 
   - name: gym-all
