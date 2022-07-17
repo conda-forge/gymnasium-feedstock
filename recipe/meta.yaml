@@ -1,4 +1,4 @@
-{% set version = "0.24.0" %}
+{% set version = "0.22.0" %}
 
 package:
   name: gym
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/g/gym/gym-{{ version }}.tar.gz
-  sha256: 69f96424be40d23088be978b61f45c23911e2ccddafad08cf2fac608e8bd86e4
+  sha256: 339144c89951758187c378111919bc0e2f1695f9e9d9699e3f19279a6398148d
 
 build:
   number: 0
@@ -54,7 +54,7 @@ outputs:
         - python
         # exclude gym-atari package because the Atari-Py dependency
         # has been replaced with ALE-py which has not yet been
-        # packaged in conda-forge, see conda-forge/staged-recipes#16488
+        # packaged in conda-forge, see conda-forge/staged-recipes#19664
         # - {{ pin_subpackage('gym-atari', exact=True) }}
         - {{ pin_subpackage('gym-box2d', exact=True) }}
         - {{ pin_subpackage('gym-classic_control', exact=True) }}
