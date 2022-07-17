@@ -76,7 +76,7 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('gym', exact=True) }}
-        - ale-py >=0.7.1,<0.8
+        - ale-py >=0.7.4,<0.8
     test:
       imports:
         - gym.envs.atari
@@ -88,8 +88,8 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('gym', exact=True) }}
-        - box2d-py ==2.3.8
-        - pyglet >=1.4.0
+        - box2d-py ==2.3.*
+        - pygame ==2.1.*
     test:
       imports:
         - gym.envs.box2d
@@ -100,9 +100,8 @@ outputs:
         - python
       run:
         - python
-        - pyglet >=1.4.0
         - {{ pin_subpackage('gym', exact=True) }}
-        # no extra dependencies for this combination
+        - pygame ==2.1.*
     test:
       imports:
         - gym.envs.classic_control
@@ -114,6 +113,7 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('gym', exact=True) }}
+        # conda-forge builds for mujoco-python start only from 2.2.0
         - mujoco-python
         - imageio
     test:
@@ -127,6 +127,7 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('gym', exact=True) }}
+        - pygame ==2.1.*
         - scipy >=1.4.1
     test:
       imports:
