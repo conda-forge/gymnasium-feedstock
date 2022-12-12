@@ -19,6 +19,9 @@ requirements:
     - numpy                                  # [build_platform != target_platform]
   host:
     - python
+    - pip
+    - setuptools
+    - wheel
   run:
     - python
 
