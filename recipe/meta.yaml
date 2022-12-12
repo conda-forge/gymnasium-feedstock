@@ -54,10 +54,7 @@ outputs:
         - python
       run:
         - python
-        # exclude gym-atari package because the Atari-Py dependency
-        # has been replaced with ALE-py which has not yet been
-        # packaged in conda-forge, see conda-forge/staged-recipes#19664
-        # - {{ pin_subpackage('gym-atari', exact=True) }}
+        - {{ pin_subpackage('gym-atari', exact=True) }}
         - {{ pin_subpackage('gym-box2d', exact=True) }}
         - {{ pin_subpackage('gym-classic_control', exact=True) }}
         - {{ pin_subpackage('gym-mujoco', exact=True) }}
@@ -68,17 +65,13 @@ outputs:
         - gym
 
   - name: gym-atari
-    build:
-      # the Atari-Py dependency has been replaced with ALE-Py
-      # which has not yet been packaged in conda-forge
-      skip: true
     requirements:
       host:
         - python
       run:
         - python
         - {{ pin_subpackage('gym', exact=True) }}
-        - ale-py >=0.7.4,<0.8
+        - ale-py >=0.7.4
     test:
       imports:
         - gym.envs.atari
