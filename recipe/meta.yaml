@@ -10,8 +10,6 @@ source:
 
 build:
   number: 0
-  # temporary: unconditional skip to update history
-  skip: true
 
 # Need these up here for conda-smithy to handle them properly.
 requirements:
