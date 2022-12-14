@@ -1,12 +1,12 @@
-{% set version = "0.22.0" %}
+{% set version = "0.26.1" %}
 
 package:
   name: gym
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/g/gym/gym-{{ version }}.tar.gz
-  sha256: 339144c89951758187c378111919bc0e2f1695f9e9d9699e3f19279a6398148d
+  url: https://github.com/openai/gym/archive/refs/tags/{{ version }}.tar.gz
+  sha256: bff4d02892e73091b40bc82d67f0007f46926cb7ab91ffff3b048395ec321a83
 
 build:
   number: 0
