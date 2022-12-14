@@ -193,6 +193,7 @@ about:
 
 extra:
   recipe-maintainers:
-    - mxr-conda
     - h-vetinari
-    - dsangillo
+    - jkterry1
+    - pseudo-rnd-thoughts
+    - thewchan
