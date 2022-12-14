@@ -50,7 +50,8 @@ outputs:
         - python
       run:
         - python
-        - {{ pin_subpackage('gym-atari', exact=True) }}
+        # see below
+        # - {{ pin_subpackage('gym-atari', exact=True) }}
         - {{ pin_subpackage('gym-box2d', exact=True) }}
         - {{ pin_subpackage('gym-classic_control', exact=True) }}
         - {{ pin_subpackage('gym-mujoco', exact=True) }}
@@ -70,6 +71,10 @@ outputs:
         - pytest -v tests/
 
   - name: gym-atari
+    build:
+      # needs some as-yet unsolved packaging shenanigans
+      # to actually install gym.envs.atari
+      skip: true
     requirements:
       host:
         - python
