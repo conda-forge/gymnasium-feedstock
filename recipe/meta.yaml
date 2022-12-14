@@ -54,6 +54,8 @@ outputs:
         - {{ pin_subpackage('gym-box2d', exact=True) }}
         - {{ pin_subpackage('gym-classic_control', exact=True) }}
         - {{ pin_subpackage('gym-mujoco', exact=True) }}
+        # see below
+        # - {{ pin_subpackage('gym-mujoco_py', exact=True) }}
         - {{ pin_subpackage('gym-toy_text', exact=True) }}
         - {{ pin_subpackage('gym-other', exact=True) }}
     test:
@@ -74,7 +76,7 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('gym', exact=True) }}
-        - ale-py >=0.7.4
+        - ale-py >=0.8.0,<0.9
     test:
       imports:
         - gym.envs.atari
@@ -83,6 +85,7 @@ outputs:
     requirements:
       host:
         - python
+        - swig ==4.*
       run:
         - python
         - {{ pin_subpackage('gym', exact=True) }}
@@ -111,9 +114,25 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('gym', exact=True) }}
-        # conda-forge builds for mujoco-python start only from 2.2.0
-        - mujoco-python
-        - imageio
+        - mujoco-python ==2.2.0
+        - imageio >=2.14.1
+    test:
+      imports:
+        - gym.envs.mujoco
+
+  - name: gym-mujoco_py
+    build:
+      # we currently don't have https://github.com/openai/mujoco-py
+      # in conda-forge, and it'll be replaced by mujoco anyway
+      skip: true
+    requirements:
+      host:
+        - python
+      run:
+        - python
+        - {{ pin_subpackage('gym', exact=True) }}
+        - mujoco-py >=2.1,<2.2
+        - imageio >=2.14.1
     test:
       imports:
         - gym.envs.mujoco
@@ -126,7 +145,6 @@ outputs:
         - python
         - {{ pin_subpackage('gym', exact=True) }}
         - pygame ==2.1.*
-        - scipy >=1.4.1
     test:
       imports:
         - gym.envs.toy_text
@@ -139,7 +157,9 @@ outputs:
         - python
         - {{ pin_subpackage('gym', exact=True) }}
         - lz4 >=3.1.0
-        - opencv >=3.0
+        - matplotlib >=3.0
+        - moviepy >=1.0
+        - py-opencv >=3.0
     test:
       imports:
         # There are no tests in the source code for gym-other
