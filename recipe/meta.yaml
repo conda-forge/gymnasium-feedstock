@@ -9,6 +9,8 @@ source:
   sha256: 4b09589ae94885b6ad2864d4fb75ec3b0e97a2ded8704e4683e114d7762e21f5
 
 build:
+  # note: gymnasium 0.26.3 *_0 has been published already; when we republish
+  # 0.26.3 with all the optional builds, the build number needs to be >0!
   number: 0
 
 # Need these up here for conda-smithy to handle them properly.
