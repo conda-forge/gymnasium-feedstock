@@ -38,6 +38,7 @@ outputs:
       run:
         - python
         - cloudpickle >=1.2.0
+        - gym-notices
         - numpy
         - importlib_metadata >=4.8.1  # [py<=39]
     test:
