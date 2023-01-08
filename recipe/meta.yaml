@@ -1,12 +1,12 @@
 {% set version = "0.26.1" %}
 
 package:
-  name: gym
+  name: gymnasium-split
   version: {{ version }}
 
 source:
-  url: https://github.com/openai/gym/archive/refs/tags/{{ version }}.tar.gz
-  sha256: bff4d02892e73091b40bc82d67f0007f46926cb7ab91ffff3b048395ec321a83
+  url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: 4b09589ae94885b6ad2864d4fb75ec3b0e97a2ded8704e4683e114d7762e21f5
 
 build:
   number: 0
@@ -26,7 +26,7 @@ requirements:
     - python
 
 outputs:
-  - name: gym
+  - name: gymnasium
     build:
       script: {{ PYTHON }} -m pip install . -vv --no-deps
     requirements:
@@ -38,28 +38,28 @@ outputs:
       run:
         - python
         - cloudpickle >=1.2.0
-        - gym-notices
+        - gymnasium-notices
         - numpy
         - importlib_metadata >=4.8.1  # [py<=39]
     test:
       imports:
-        - gym
+        - gymnasium
 
-  - name: gym-all
+  - name: gymnasium-all
     requirements:
       host:
         - python
       run:
         - python
         # see below
-        # - {{ pin_subpackage('gym-atari', exact=True) }}
-        - {{ pin_subpackage('gym-box2d', exact=True) }}
-        - {{ pin_subpackage('gym-classic_control', exact=True) }}
-        - {{ pin_subpackage('gym-mujoco', exact=True) }}
+        # - {{ pin_subpackage('gymnasium-atari', exact=True) }}
+        - {{ pin_subpackage('gymnasium-box2d', exact=True) }}
+        - {{ pin_subpackage('gymnasium-classic_control', exact=True) }}
+        - {{ pin_subpackage('gymnasium-mujoco', exact=True) }}
         # see below
-        # - {{ pin_subpackage('gym-mujoco_py', exact=True) }}
-        - {{ pin_subpackage('gym-toy_text', exact=True) }}
-        - {{ pin_subpackage('gym-other', exact=True) }}
+        # - {{ pin_subpackage('gymnasium-mujoco_py', exact=True) }}
+        - {{ pin_subpackage('gymnasium-toy_text', exact=True) }}
+        - {{ pin_subpackage('gymnasium-other', exact=True) }}
     test:
       source_files:
         - tests/
@@ -72,62 +72,62 @@ outputs:
         # TODO: figure out segfaults
         # - pytest -v tests/
 
-  - name: gym-atari
+  - name: gymnasium-atari
     build:
       # needs some as-yet unsolved packaging shenanigans
-      # to actually install gym.envs.atari
+      # to actually install gymnasium.envs.atari
       skip: true
     requirements:
       host:
         - python
       run:
         - python
-        - {{ pin_subpackage('gym', exact=True) }}
+        - {{ pin_subpackage('gymnasium', exact=True) }}
         - ale-py >=0.8.0,<0.9
     test:
       imports:
-        - gym.envs.atari
+        - gymnasium.envs.atari
 
-  - name: gym-box2d
+  - name: gymnasium-box2d
     requirements:
       host:
         - python
         - swig ==4.*
       run:
         - python
-        - {{ pin_subpackage('gym', exact=True) }}
+        - {{ pin_subpackage('gymnasium', exact=True) }}
         - box2d-py ==2.3.*
         - pygame ==2.1.*
     test:
       imports:
-        - gym.envs.box2d
+        - gymnasium.envs.box2d
 
-  - name: gym-classic_control
+  - name: gymnasium-classic_control
     requirements:
       host:
         - python
       run:
         - python
-        - {{ pin_subpackage('gym', exact=True) }}
+        - {{ pin_subpackage('gymnasium', exact=True) }}
         - pygame ==2.1.*
     test:
       imports:
-        - gym.envs.classic_control
+        - gymnasium.envs.classic_control
 
-  - name: gym-mujoco
+  - name: gymnasium-mujoco
     requirements:
       host:
         - python
       run:
         - python
-        - {{ pin_subpackage('gym', exact=True) }}
+        - {{ pin_subpackage('gymnasium', exact=True) }}
         - mujoco-python ==2.2.0
         - imageio >=2.14.1
     test:
       imports:
-        - gym.envs.mujoco
+        - gymnasium.envs.mujoco
 
-  - name: gym-mujoco_py
+  - name: gymnasium-mujoco_py
     build:
       # we currently don't have https://github.com/openai/mujoco-py
       # in conda-forge, and it'll be replaced by mujoco anyway
@@ -137,49 +137,47 @@ outputs:
         - python
       run:
         - python
-        - {{ pin_subpackage('gym', exact=True) }}
+        - {{ pin_subpackage('gymnasium', exact=True) }}
         - mujoco-py >=2.1,<2.2
         - imageio >=2.14.1
     test:
       imports:
-        - gym.envs.mujoco
+        - gymnasium.envs.mujoco
 
-  - name: gym-toy_text
+  - name: gymnasium-toy_text
     requirements:
       host:
         - python
       run:
         - python
-        - {{ pin_subpackage('gym', exact=True) }}
+        - {{ pin_subpackage('gymnasium', exact=True) }}
         - pygame ==2.1.*
     test:
       imports:
-        - gym.envs.toy_text
+        - gymnasium.envs.toy_text
 
-  - name: gym-other
+  - name: gymnasium-other
     requirements:
       host:
         - python
       run:
         - python
-        - {{ pin_subpackage('gym', exact=True) }}
+        - {{ pin_subpackage('gymnasium', exact=True) }}
         - lz4 >=3.1.0
         - matplotlib >=3.0
         - moviepy >=1.0
         - py-opencv >=3.0
     test:
       imports:
-        # There are no tests in the source code for gym-other
+        # There are no tests in the source code for gymnasium-other
 
 about:
-  home: https://github.com/openai/gym
+  home: https://gymnasium.farama.org/
   license: MIT
   license_family: MIT
   license_file: LICENSE.md
-  summary: 'The OpenAI Gym: A toolkit for developing and comparing your reinforcement learning agents.'
-  description: 'The OpenAI Gym: A toolkit for developing and comparing your reinforcement learning agents.'
-  doc_url: https://gym.openai.com/docs/
-  dev_url: https://github.com/openai/gym
+  summary: A standard API for reinforcement learning and a diverse set of reference environments (formerly Gym)
+  dev_url: https://github.com/Farama-Foundation/Gymnasium
 
 extra:
   recipe-maintainers:
@@ -187,3 +185,4 @@ extra:
     - jkterry1
     - pseudo-rnd-thoughts
     - thewchan
+  feedstock-name: gymnasium
