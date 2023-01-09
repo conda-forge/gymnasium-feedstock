@@ -1,17 +1,15 @@
-{% set version = "0.24.0" %}
+{% set version = "0.26.1" %}
 
 package:
   name: gym
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/g/gym/gym-{{ version }}.tar.gz
-  sha256: 69f96424be40d23088be978b61f45c23911e2ccddafad08cf2fac608e8bd86e4
+  url: https://github.com/openai/gym/archive/refs/tags/{{ version }}.tar.gz
+  sha256: bff4d02892e73091b40bc82d67f0007f46926cb7ab91ffff3b048395ec321a83
 
 build:
   number: 0
-  # temporary: unconditional skip to update history
-  skip: true
 
 # Need these up here for conda-smithy to handle them properly.
 requirements:
@@ -21,6 +19,9 @@ requirements:
     - numpy                                  # [build_platform != target_platform]
   host:
     - python
+    - pip
+    - setuptools
+    - wheel
   run:
     - python
 
@@ -37,16 +38,12 @@ outputs:
       run:
         - python
         - cloudpickle >=1.2.0
+        - gym-notices
         - numpy
         - importlib_metadata >=4.8.1  # [py<=39]
     test:
-      requires:
-        - mock
-        - pytest
       imports:
         - gym
-      commands:
-        # TODO: run test suite
 
   - name: gym-all
     requirements:
@@ -54,23 +51,31 @@ outputs:
         - python
       run:
         - python
-        # exclude gym-atari package because the Atari-Py dependency
-        # has been replaced with ALE-py which has not yet been
-        # packaged in conda-forge, see conda-forge/staged-recipes#16488
+        # see below
         # - {{ pin_subpackage('gym-atari', exact=True) }}
         - {{ pin_subpackage('gym-box2d', exact=True) }}
         - {{ pin_subpackage('gym-classic_control', exact=True) }}
         - {{ pin_subpackage('gym-mujoco', exact=True) }}
+        # see below
+        # - {{ pin_subpackage('gym-mujoco_py', exact=True) }}
         - {{ pin_subpackage('gym-toy_text', exact=True) }}
         - {{ pin_subpackage('gym-other', exact=True) }}
     test:
-      imports:
-        - gym
+      source_files:
+        - tests/
+      requires:
+        - mock
+        - pytest
+        - pip
+      commands:
+        - pip check
+        # TODO: figure out segfaults
+        # - pytest -v tests/
 
   - name: gym-atari
     build:
-      # the Atari-Py dependency has been replaced with ALE-Py
-      # which has not yet been packaged in conda-forge
+      # needs some as-yet unsolved packaging shenanigans
+      # to actually install gym.envs.atari
       skip: true
     requirements:
       host:
@@ -78,7 +83,7 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('gym', exact=True) }}
-        - ale-py >=0.7.1,<0.8
+        - ale-py >=0.8.0,<0.9
     test:
       imports:
         - gym.envs.atari
@@ -87,11 +92,12 @@ outputs:
     requirements:
       host:
         - python
+        - swig ==4.*
       run:
         - python
         - {{ pin_subpackage('gym', exact=True) }}
-        - box2d-py ==2.3.8
-        - pyglet >=1.4.0
+        - box2d-py ==2.3.*
+        - pygame ==2.1.*
     test:
       imports:
         - gym.envs.box2d
@@ -102,9 +108,8 @@ outputs:
         - python
       run:
         - python
-        - pyglet >=1.4.0
         - {{ pin_subpackage('gym', exact=True) }}
-        # no extra dependencies for this combination
+        - pygame ==2.1.*
     test:
       imports:
         - gym.envs.classic_control
@@ -116,8 +121,25 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('gym', exact=True) }}
-        - mujoco-python
-        - imageio
+        - mujoco-python ==2.2.0
+        - imageio >=2.14.1
+    test:
+      imports:
+        - gym.envs.mujoco
+
+  - name: gym-mujoco_py
+    build:
+      # we currently don't have https://github.com/openai/mujoco-py
+      # in conda-forge, and it'll be replaced by mujoco anyway
+      skip: true
+    requirements:
+      host:
+        - python
+      run:
+        - python
+        - {{ pin_subpackage('gym', exact=True) }}
+        - mujoco-py >=2.1,<2.2
+        - imageio >=2.14.1
     test:
       imports:
         - gym.envs.mujoco
@@ -129,7 +151,7 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('gym', exact=True) }}
-        - scipy >=1.4.1
+        - pygame ==2.1.*
     test:
       imports:
         - gym.envs.toy_text
@@ -142,7 +164,9 @@ outputs:
         - python
         - {{ pin_subpackage('gym', exact=True) }}
         - lz4 >=3.1.0
-        - opencv >=3.0
+        - matplotlib >=3.0
+        - moviepy >=1.0
+        - py-opencv >=3.0
     test:
       imports:
         # There are no tests in the source code for gym-other
