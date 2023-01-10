@@ -1,4 +1,4 @@
-{% set version = "0.26.1" %}
+{% set version = "0.26.3" %}
 
 package:
   name: gymnasium-split
@@ -6,12 +6,10 @@ package:
 
 source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 4b09589ae94885b6ad2864d4fb75ec3b0e97a2ded8704e4683e114d7762e21f5
+  sha256: bdb641c4cde0916aca339f736764b89077cdc147ed274a2ea6023c043c8d48e7
 
 build:
-  # note: gymnasium 0.26.3 *_0 has been published already; when we republish
-  # 0.26.3 with all the optional builds, the build number needs to be >0!
-  number: 0
+  number: 1
 
 # Need these up here for conda-smithy to handle them properly.
 requirements:
@@ -181,7 +179,7 @@ about:
   home: https://gymnasium.farama.org/
   license: MIT
   license_family: MIT
-  license_file: LICENSE.md
+  license_file: LICENSE
   summary: A standard API for reinforcement learning and a diverse set of reference environments (formerly Gym)
   dev_url: https://github.com/Farama-Foundation/Gymnasium
 
