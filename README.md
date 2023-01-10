@@ -1,19 +1,15 @@
-About gym
-=========
+About gymnasium
+===============
 
-Home: https://github.com/openai/gym
+Home: https://gymnasium.farama.org/
 
 Package license: MIT
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/gymnasium-feedstock/blob/main/LICENSE.txt)
 
-Summary: The OpenAI Gym: A toolkit for developing and comparing your reinforcement learning agents.
+Summary: A standard API for reinforcement learning and a diverse set of reference environments (formerly Gym)
 
-Development: https://github.com/openai/gym
-
-Documentation: https://gym.openai.com/docs/
-
-The OpenAI Gym: A toolkit for developing and comparing your reinforcement learning agents.
+Development: https://github.com/Farama-Foundation/Gymnasium
 
 Current build status
 ====================
@@ -129,59 +125,59 @@ Current release info
 
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-gym-green.svg)](https://anaconda.org/conda-forge/gym) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gym.svg)](https://anaconda.org/conda-forge/gym) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gym.svg)](https://anaconda.org/conda-forge/gym) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gym.svg)](https://anaconda.org/conda-forge/gym) |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-gym--all-green.svg)](https://anaconda.org/conda-forge/gym-all) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gym-all.svg)](https://anaconda.org/conda-forge/gym-all) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gym-all.svg)](https://anaconda.org/conda-forge/gym-all) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gym-all.svg)](https://anaconda.org/conda-forge/gym-all) |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-gym--box2d-green.svg)](https://anaconda.org/conda-forge/gym-box2d) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gym-box2d.svg)](https://anaconda.org/conda-forge/gym-box2d) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gym-box2d.svg)](https://anaconda.org/conda-forge/gym-box2d) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gym-box2d.svg)](https://anaconda.org/conda-forge/gym-box2d) |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-gym--classic_control-green.svg)](https://anaconda.org/conda-forge/gym-classic_control) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gym-classic_control.svg)](https://anaconda.org/conda-forge/gym-classic_control) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gym-classic_control.svg)](https://anaconda.org/conda-forge/gym-classic_control) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gym-classic_control.svg)](https://anaconda.org/conda-forge/gym-classic_control) |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-gym--mujoco-green.svg)](https://anaconda.org/conda-forge/gym-mujoco) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gym-mujoco.svg)](https://anaconda.org/conda-forge/gym-mujoco) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gym-mujoco.svg)](https://anaconda.org/conda-forge/gym-mujoco) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gym-mujoco.svg)](https://anaconda.org/conda-forge/gym-mujoco) |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-gym--other-green.svg)](https://anaconda.org/conda-forge/gym-other) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gym-other.svg)](https://anaconda.org/conda-forge/gym-other) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gym-other.svg)](https://anaconda.org/conda-forge/gym-other) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gym-other.svg)](https://anaconda.org/conda-forge/gym-other) |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-gym--toy_text-green.svg)](https://anaconda.org/conda-forge/gym-toy_text) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gym-toy_text.svg)](https://anaconda.org/conda-forge/gym-toy_text) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gym-toy_text.svg)](https://anaconda.org/conda-forge/gym-toy_text) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gym-toy_text.svg)](https://anaconda.org/conda-forge/gym-toy_text) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-gymnasium-green.svg)](https://anaconda.org/conda-forge/gymnasium) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gymnasium.svg)](https://anaconda.org/conda-forge/gymnasium) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gymnasium.svg)](https://anaconda.org/conda-forge/gymnasium) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gymnasium.svg)](https://anaconda.org/conda-forge/gymnasium) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-gymnasium--all-green.svg)](https://anaconda.org/conda-forge/gymnasium-all) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gymnasium-all.svg)](https://anaconda.org/conda-forge/gymnasium-all) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gymnasium-all.svg)](https://anaconda.org/conda-forge/gymnasium-all) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gymnasium-all.svg)](https://anaconda.org/conda-forge/gymnasium-all) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-gymnasium--box2d-green.svg)](https://anaconda.org/conda-forge/gymnasium-box2d) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gymnasium-box2d.svg)](https://anaconda.org/conda-forge/gymnasium-box2d) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gymnasium-box2d.svg)](https://anaconda.org/conda-forge/gymnasium-box2d) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gymnasium-box2d.svg)](https://anaconda.org/conda-forge/gymnasium-box2d) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-gymnasium--classic_control-green.svg)](https://anaconda.org/conda-forge/gymnasium-classic_control) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gymnasium-classic_control.svg)](https://anaconda.org/conda-forge/gymnasium-classic_control) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gymnasium-classic_control.svg)](https://anaconda.org/conda-forge/gymnasium-classic_control) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gymnasium-classic_control.svg)](https://anaconda.org/conda-forge/gymnasium-classic_control) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-gymnasium--mujoco-green.svg)](https://anaconda.org/conda-forge/gymnasium-mujoco) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gymnasium-mujoco.svg)](https://anaconda.org/conda-forge/gymnasium-mujoco) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gymnasium-mujoco.svg)](https://anaconda.org/conda-forge/gymnasium-mujoco) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gymnasium-mujoco.svg)](https://anaconda.org/conda-forge/gymnasium-mujoco) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-gymnasium--other-green.svg)](https://anaconda.org/conda-forge/gymnasium-other) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gymnasium-other.svg)](https://anaconda.org/conda-forge/gymnasium-other) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gymnasium-other.svg)](https://anaconda.org/conda-forge/gymnasium-other) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gymnasium-other.svg)](https://anaconda.org/conda-forge/gymnasium-other) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-gymnasium--toy_text-green.svg)](https://anaconda.org/conda-forge/gymnasium-toy_text) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gymnasium-toy_text.svg)](https://anaconda.org/conda-forge/gymnasium-toy_text) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gymnasium-toy_text.svg)](https://anaconda.org/conda-forge/gymnasium-toy_text) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gymnasium-toy_text.svg)](https://anaconda.org/conda-forge/gymnasium-toy_text) |
 
-Installing gym
-==============
+Installing gymnasium
+====================
 
-Installing `gym` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
+Installing `gymnasium` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
 
 ```
 conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `gym, gym-all, gym-box2d, gym-classic_control, gym-mujoco, gym-other, gym-toy_text` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `gymnasium, gymnasium-all, gymnasium-box2d, gymnasium-classic_control, gymnasium-mujoco, gymnasium-other, gymnasium-toy_text` can be installed with `conda`:
 
 ```
-conda install gym gym-all gym-box2d gym-classic_control gym-mujoco gym-other gym-toy_text
-```
-
-or with `mamba`:
-
-```
-mamba install gym gym-all gym-box2d gym-classic_control gym-mujoco gym-other gym-toy_text
-```
-
-It is possible to list all of the versions of `gym` available on your platform with `conda`:
-
-```
-conda search gym --channel conda-forge
+conda install gymnasium gymnasium-all gymnasium-box2d gymnasium-classic_control gymnasium-mujoco gymnasium-other gymnasium-toy_text
 ```
 
 or with `mamba`:
 
 ```
-mamba search gym --channel conda-forge
+mamba install gymnasium gymnasium-all gymnasium-box2d gymnasium-classic_control gymnasium-mujoco gymnasium-other gymnasium-toy_text
+```
+
+It is possible to list all of the versions of `gymnasium` available on your platform with `conda`:
+
+```
+conda search gymnasium --channel conda-forge
+```
+
+or with `mamba`:
+
+```
+mamba search gymnasium --channel conda-forge
 ```
 
 Alternatively, `mamba repoquery` may provide more information:
 
 ```
 # Search all versions available on your platform:
-mamba repoquery search gym --channel conda-forge
+mamba repoquery search gymnasium --channel conda-forge
 
-# List packages depending on `gym`:
-mamba repoquery whoneeds gym --channel conda-forge
+# List packages depending on `gymnasium`:
+mamba repoquery whoneeds gymnasium --channel conda-forge
 
-# List dependencies of `gym`:
-mamba repoquery depends gym --channel conda-forge
+# List dependencies of `gymnasium`:
+mamba repoquery depends gymnasium --channel conda-forge
 ```
 
 
@@ -226,17 +222,17 @@ Terminology
                   produce the finished article (built conda distributions)
 
 
-Updating gym-feedstock
-======================
+Updating gymnasium-feedstock
+============================
 
-If you would like to improve the gym recipe or build a new
+If you would like to improve the gymnasium recipe or build a new
 package version, please fork this repository and submit a PR. Upon submission,
 your changes will be run on the appropriate platforms to give the reviewer an
 opportunity to confirm that the changes result in a successful build. Once
 merged, the recipe will be re-built and uploaded automatically to the
 `conda-forge` channel, whereupon the built conda packages will be available for
 everybody to install and use from the `conda-forge` channel.
-Note that all branches in the conda-forge/gym-feedstock are
+Note that all branches in the conda-forge/gymnasium-feedstock are
 immediately built and any created packages are uploaded, so PRs should be based
 on branches in forks and branches in the main repository should only be used to
 build distinct package versions.
@@ -252,7 +248,6 @@ Feedstock Maintainers
 =====================
 
 * [@h-vetinari](https://github.com/h-vetinari/)
-* [@jkterry1](https://github.com/jkterry1/)
 * [@pseudo-rnd-thoughts](https://github.com/pseudo-rnd-thoughts/)
 * [@thewchan](https://github.com/thewchan/)
 
