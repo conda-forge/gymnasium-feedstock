@@ -188,7 +188,6 @@ about:
 extra:
   recipe-maintainers:
     - h-vetinari
-    - jkterry1
     - pseudo-rnd-thoughts
     - thewchan
   feedstock-name: gymnasium
