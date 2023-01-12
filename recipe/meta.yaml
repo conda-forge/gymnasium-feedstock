@@ -55,8 +55,7 @@ outputs:
         - python
       run:
         - python
-        # see below
-        # - {{ pin_subpackage('gymnasium-atari', exact=True) }}
+        - {{ pin_subpackage('gymnasium-atari', exact=True) }}
         - {{ pin_subpackage('gymnasium-box2d', exact=True) }}
         - {{ pin_subpackage('gymnasium-classic_control', exact=True) }}
         - {{ pin_subpackage('gymnasium-mujoco', exact=True) }}
@@ -77,10 +76,6 @@ outputs:
         # - pytest -v tests/
 
   - name: gymnasium-atari
-    build:
-      # needs some as-yet unsolved packaging shenanigans
-      # to actually install gymnasium.envs.atari
-      skip: true
     requirements:
       host:
         - python
