@@ -1,4 +1,4 @@
-{% set version = "0.26.3" %}
+{% set version = "0.27.0" %}
 
 package:
   name: gymnasium-split
@@ -6,10 +6,10 @@ package:
 
 source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: bdb641c4cde0916aca339f736764b89077cdc147ed274a2ea6023c043c8d48e7
+  sha256: b4e8a67cbf654fdd27127a892c4ffafde3efab88fd13debdf729cc4aad778956
 
 build:
-  number: 1
+  number: 0
 
 # Need these up here for conda-smithy to handle them properly.
 requirements:
