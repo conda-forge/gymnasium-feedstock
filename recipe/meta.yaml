@@ -125,7 +125,7 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('gymnasium', exact=True) }}
-        - mujoco-python ==2.2.0
+        - mujoco-python >=2.2.0,<2.4
         - imageio >=2.14.1
     test:
       imports:
