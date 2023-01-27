@@ -73,8 +73,7 @@ outputs:
         - pip
       commands:
         - pip check
-        # TODO: figure out segfaults
-        # - pytest -v tests/
+        - pytest -v tests/
 
   - name: gymnasium-atari
     build:
