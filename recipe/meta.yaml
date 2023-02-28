@@ -44,6 +44,8 @@ outputs:
         - cloudpickle >=1.2.0
         - gymnasium-notices
         - numpy
+        - jax-jumpy
+        - typing_extensions
         - importlib_metadata >=4.8.1  # [py<=39]
     test:
       imports:
