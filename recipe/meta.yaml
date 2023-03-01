@@ -1,4 +1,4 @@
-{% set version = "0.26.3" %}
+{% set version = "0.27.1" %}
 
 package:
   name: gymnasium-split
@@ -6,10 +6,10 @@ package:
 
 source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: bdb641c4cde0916aca339f736764b89077cdc147ed274a2ea6023c043c8d48e7
+  sha256: bac0e8e1a9c672568d8673ec34588eb80807a2067964c3dc90a97d7fb2f51460
 
 build:
-  number: 2
+  number: 0
 
 # Need these up here for conda-smithy to handle them properly.
 requirements:
@@ -44,6 +44,8 @@ outputs:
         - cloudpickle >=1.2.0
         - gymnasium-notices
         - numpy
+        - jax-jumpy
+        - typing_extensions
         - importlib_metadata >=4.8.1  # [py<=39]
     test:
       imports:
