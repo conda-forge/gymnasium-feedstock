@@ -1,4 +1,4 @@
-{% set version = "0.27.1" %}
+{% set version = "0.28.0" %}
 
 package:
   name: gymnasium-split
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: bac0e8e1a9c672568d8673ec34588eb80807a2067964c3dc90a97d7fb2f51460
+  sha256: f425411ee10e598f5b1a57bb40f04edd444c1ebe454f0d483b660bc19e04eb31
 
 build:
   number: 0
