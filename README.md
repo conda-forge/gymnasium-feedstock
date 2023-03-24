@@ -1,11 +1,11 @@
-About gymnasium
-===============
+About gymnasium-feedstock
+=========================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/gymnasium-feedstock/blob/main/LICENSE.txt)
 
 Home: https://gymnasium.farama.org/
 
 Package license: MIT
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/gymnasium-feedstock/blob/main/LICENSE.txt)
 
 Summary: A standard API for reinforcement learning and a diverse set of reference environments (formerly Gym)
 
