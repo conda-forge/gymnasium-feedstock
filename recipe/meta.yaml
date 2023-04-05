@@ -67,16 +67,18 @@ outputs:
         - {{ pin_subpackage('gymnasium-toy_text', exact=True) }}
         - {{ pin_subpackage('gymnasium-other', exact=True) }}
     test:
-      source_files:
-        - tests/
+#      source_files:
+#        - tests/
+      files:
+        - custom_tests/
       requires:
         - mock
         - pytest
         - pip
       commands:
         - pip check
-        # TODO: figure out segfaults
-        - pytest -v tests/test_core.py tests/envs/test_compatibility.py tests/spaces
+#        - pytest -v tests/test_core.py tests/envs/test_compatibility.py tests/spaces
+        - pytest custom_tests/test_1.py
 
   - name: gymnasium-atari
     build:
