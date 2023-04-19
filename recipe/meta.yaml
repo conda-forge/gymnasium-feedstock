@@ -7,9 +7,12 @@ package:
 source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v{{ version }}.tar.gz
   sha256: bac0e8e1a9c672568d8673ec34588eb80807a2067964c3dc90a97d7fb2f51460
+  patches:
+    - 0001-add-missing-phys2d-asset-in-setup.patch  # only for gymnasium <=0.28.1 (should be fixed very soon)
+    - 0002-fix-compatibility-version-mismatch.patch  # only for gymnasium <0.28.0
 
 build:
-  number: 0
+  number: 1
 
 # Need these up here for conda-smithy to handle them properly.
 requirements:
@@ -44,7 +47,8 @@ outputs:
         - cloudpickle >=1.2.0
         - gymnasium-notices
         - numpy
-        - jax-jumpy
+        - jax-jumpy <1.0.0  # for gymnasium <0.28.0
+        #- jax-jumpy >=1.0.0  # for gymnasium >=0.28.0
         - typing_extensions
         - importlib_metadata >=4.8.1  # [py<=39]
     test:
@@ -73,10 +77,12 @@ outputs:
         - mock
         - pytest
         - pip
+        - jax >= 0.3.24
+        - pytorch-cpu >=1.0
+        - gym
       commands:
         - pip check
-        # TODO: figure out segfaults
-        # - pytest -v tests/
+        - MUJOCO_GL=osmesa pytest -v tests/
 
   - name: gymnasium-atari
     build:
