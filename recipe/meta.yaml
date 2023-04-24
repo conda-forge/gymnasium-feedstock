@@ -10,6 +10,8 @@ source:
   patches:
     - 0001-add-missing-phys2d-asset-in-setup.patch  # only for gymnasium <=0.28.1 (should be fixed very soon)
     - 0002-fix-compatibility-version-mismatch.patch  # only for gymnasium <0.28.0
+    - 0003-skip-if-jax-or-torch-is-missing.patch
+    - 0004-skip-fork-start-method-if-not-available.patch
 
 build:
   number: 1
@@ -77,12 +79,13 @@ outputs:
         - mock
         - pytest
         - pip
-        - jax >= 0.3.24
-        - pytorch-cpu >=1.0
+        - jax >= 0.3.24  # [osx or linux64]
+        - pytorch-cpu >=1.0  # [not win and not ppc64le]
         - gym
       commands:
         - pip check
-        - MUJOCO_GL=osmesa pytest -v tests/
+        - MUJOCO_GL=osmesa pytest -v tests/  #[linux]
+        - pytest -v tests/  # [not linux]
 
   - name: gymnasium-atari
     build:
