@@ -8,10 +8,10 @@ source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v{{ version }}.tar.gz
   sha256: bac0e8e1a9c672568d8673ec34588eb80807a2067964c3dc90a97d7fb2f51460
   patches:
-    - 0001-add-missing-phys2d-asset-in-setup.patch  # only for gymnasium <=0.28.1 (should be fixed very soon)
+    - 0001-add-missing-phys2d-asset-in-setup.patch  # only for gymnasium <=0.28.1 (has been fixed upstream in #f6ceb08)
     - 0002-fix-compatibility-version-mismatch.patch  # only for gymnasium <0.28.0
-    - 0003-skip-if-jax-or-torch-is-missing.patch
-    - 0004-skip-fork-start-method-if-not-available.patch
+    - 0003-skip-if-jax-or-torch-is-missing.patch  # only for gymnasium <=0.28.1 (has been fixed upstream in #4350e9c)
+    - 0004-skip-fork-start-method-if-not-available.patch  # only for gymnasium <=0.28.1 (has been fixed upstream in #50b12df)
 
 build:
   number: 1
@@ -84,7 +84,7 @@ outputs:
         - gym
       commands:
         - pip check
-        - MUJOCO_GL=osmesa pytest -v tests/  #[linux]
+        - MUJOCO_GL=osmesa pytest -v tests/  # [linux]
         - pytest -v tests/  # [not linux]
 
   - name: gymnasium-atari
