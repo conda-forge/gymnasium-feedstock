@@ -81,7 +81,7 @@ outputs:
         - pip
         - jax >= 0.3.24  # [osx or linux64]
         - pytorch-cpu >=1.0  # [not win and not ppc64le]
-        - gym
+        - gym  # [py < 311]
       commands:
         - pip check
         - MUJOCO_GL=osmesa pytest -v tests/  # [linux]
