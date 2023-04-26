@@ -12,6 +12,7 @@ source:
     - 0002-fix-compatibility-version-mismatch.patch  # only for gymnasium <0.28.0
     - 0003-skip-if-jax-or-torch-is-missing.patch  # only for gymnasium <=0.28.1 (has been fixed upstream in #4350e9c)
     - 0004-skip-fork-start-method-if-not-available.patch  # only for gymnasium <=0.28.1 (has been fixed upstream in #50b12df)
+    - 0005-skip-mujoco-if-gl-not-available.patch
 
 build:
   number: 1
@@ -136,7 +137,7 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('gymnasium', exact=True) }}
-        - mujoco-python >=2.2.0,<2.4
+        - mujoco-python >=2.2.0,<=2.3.3
         - imageio >=2.14.1
     test:
       imports:
