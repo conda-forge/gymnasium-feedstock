@@ -85,8 +85,23 @@ outputs:
         - gym  # [py < 311]
       commands:
         - pip check
-        - MUJOCO_GL=osmesa pytest -v tests/  # [linux]
-        - pytest -v tests/  # [not linux]
+        {% set tests_to_skip = "_not_a_real_test" %}
+        # the following pygame tests are skipped [according to selector], because there is no rendering support during the CI build
+        {% set tests_to_skip = tests_to_skip + " or test_human_rendering" %}                    # [osx]
+        {% set tests_to_skip = tests_to_skip + " or test_keyboard_irrelevant_keydown_event" %}  # [osx]
+        {% set tests_to_skip = tests_to_skip + " or test_keyboard_keyup_event" %}               # [osx]
+        {% set tests_to_skip = tests_to_skip + " or test_keyboard_quit_event" %}                # [osx]
+        {% set tests_to_skip = tests_to_skip + " or test_keyboard_relevant_keydown_event" %}    # [osx]
+        {% set tests_to_skip = tests_to_skip + " or test_no_error_warnings[env0]" %}            # [osx]
+        {% set tests_to_skip = tests_to_skip + " or test_no_error_warnings[env1]" %}            # [osx]
+        {% set tests_to_skip = tests_to_skip + " or test_play_loop_real_env" %}                 # [osx]
+        {% set tests_to_skip = tests_to_skip + " or test_play_relevant_keys" %}                 # [osx]
+        {% set tests_to_skip = tests_to_skip + " or test_pygame_quit_event" %}                  # [osx]
+        {% set tests_to_skip = tests_to_skip + " or test_video_size_no_zoom" %}                 # [osx]
+        {% set tests_to_skip = tests_to_skip + " or test_video_size_zoom" %}                    # [osx]
+        # need to specify opengl driver on linux to enable offscreen rendering in MuJoCo
+        - export MUJOCO_GL="osmesa"  # [linux]
+        - pytest -v tests/ -k "not ({{ tests_to_skip }})"
 
   - name: gymnasium-atari
     build:
