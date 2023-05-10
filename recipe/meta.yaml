@@ -7,9 +7,15 @@ package:
 source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v{{ version }}.tar.gz
   sha256: bac0e8e1a9c672568d8673ec34588eb80807a2067964c3dc90a97d7fb2f51460
+  patches:
+    - 0001-add-missing-phys2d-asset-in-setup.patch  # only for gymnasium <=0.28.1 (has been fixed upstream in #f6ceb08)
+    - 0002-fix-compatibility-version-mismatch.patch  # only for gymnasium <0.28.0
+    - 0003-skip-if-jax-or-torch-is-missing.patch  # only for gymnasium <=0.28.1 (has been fixed upstream in #4350e9c)
+    - 0004-skip-fork-start-method-if-not-available.patch  # only for gymnasium <=0.28.1 (has been fixed upstream in #50b12df)
+    - 0005-skip-mujoco-if-gl-not-available.patch
 
 build:
-  number: 0
+  number: 1
 
 # Need these up here for conda-smithy to handle them properly.
 requirements:
@@ -44,7 +50,8 @@ outputs:
         - cloudpickle >=1.2.0
         - gymnasium-notices
         - numpy
-        - jax-jumpy
+        - jax-jumpy <1.0.0  # for gymnasium <0.28.0
+        #- jax-jumpy >=1.0.0  # for gymnasium >=0.28.0
         - typing_extensions
         - importlib_metadata >=4.8.1  # [py<=39]
     test:
@@ -73,10 +80,29 @@ outputs:
         - mock
         - pytest
         - pip
+        - jax >= 0.3.24  # [osx or linux64]
+        # conda-forge doesn't have pytorch on all platforms/arches yet
+        - pytorch >=1.0  # [unix and not ppc64le]
+        - gym            # [py<311]
       commands:
         - pip check
-        # TODO: figure out segfaults
-        # - pytest -v tests/
+        {% set tests_to_skip = "_not_a_real_test" %}
+        # the following pygame tests are skipped [according to selector], because there is no rendering support during the CI build
+        {% set tests_to_skip = tests_to_skip + " or test_human_rendering" %}                    # [osx]
+        {% set tests_to_skip = tests_to_skip + " or test_keyboard_irrelevant_keydown_event" %}  # [osx]
+        {% set tests_to_skip = tests_to_skip + " or test_keyboard_keyup_event" %}               # [osx]
+        {% set tests_to_skip = tests_to_skip + " or test_keyboard_quit_event" %}                # [osx]
+        {% set tests_to_skip = tests_to_skip + " or test_keyboard_relevant_keydown_event" %}    # [osx]
+        {% set tests_to_skip = tests_to_skip + " or test_no_error_warnings[env0]" %}            # [osx]
+        {% set tests_to_skip = tests_to_skip + " or test_no_error_warnings[env1]" %}            # [osx]
+        {% set tests_to_skip = tests_to_skip + " or test_play_loop_real_env" %}                 # [osx]
+        {% set tests_to_skip = tests_to_skip + " or test_play_relevant_keys" %}                 # [osx]
+        {% set tests_to_skip = tests_to_skip + " or test_pygame_quit_event" %}                  # [osx]
+        {% set tests_to_skip = tests_to_skip + " or test_video_size_no_zoom" %}                 # [osx]
+        {% set tests_to_skip = tests_to_skip + " or test_video_size_zoom" %}                    # [osx]
+        # need to specify opengl driver on linux to enable offscreen rendering in MuJoCo
+        - export MUJOCO_GL="osmesa"  # [linux]
+        - pytest -v tests/ -k "not ({{ tests_to_skip }})"
 
   - name: gymnasium-atari
     build:
@@ -127,7 +153,7 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('gymnasium', exact=True) }}
-        - mujoco-python >=2.2.0,<2.4
+        - mujoco-python >=2.2.0,<=2.3.3
         - imageio >=2.14.1
     test:
       imports:

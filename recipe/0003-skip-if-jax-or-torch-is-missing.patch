@@ -1,0 +1,64 @@
+From dbcfac9ec841c26b2369014e44ab7d2f08ffd10b Mon Sep 17 00:00:00 2001
+From: Christof Kaufmann <christofkaufmann.dev@gmail.com>
+Date: Mon, 24 Apr 2023 04:56:04 -0700
+Subject: [PATCH] Skip tests if module is missing
+
+This makes jax and torch optional for the tests.
+---
+ tests/experimental/functional/test_func_jax_env.py | 6 +++---
+ tests/experimental/wrappers/test_jax_to_numpy.py   | 4 ++--
+ tests/experimental/wrappers/test_jax_to_torch.py   | 6 +++---
+ 3 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/tests/experimental/functional/test_func_jax_env.py b/tests/experimental/functional/test_func_jax_env.py
+index c934fa5b..d8822ebb 100644
+--- a/tests/experimental/functional/test_func_jax_env.py
++++ b/tests/experimental/functional/test_func_jax_env.py
+@@ -1,9 +1,9 @@
+ """Test the functional jax environment."""
+ 
+-import jax
+-import jax.numpy as jnp
+-import jax.random as jrng
+ import pytest
++jax = pytest.importorskip('jax')
++jnp = pytest.importorskip('jax.numpy')
++jrng = pytest.importorskip('jax.random')
+ 
+ from gymnasium.envs.phys2d.cartpole import CartPoleFunctional
+ from gymnasium.envs.phys2d.pendulum import PendulumFunctional
+diff --git a/tests/experimental/wrappers/test_jax_to_numpy.py b/tests/experimental/wrappers/test_jax_to_numpy.py
+index 25c5ee62..bcdcc2d0 100644
+--- a/tests/experimental/wrappers/test_jax_to_numpy.py
++++ b/tests/experimental/wrappers/test_jax_to_numpy.py
+@@ -1,8 +1,8 @@
+ """Test suite for JaxToNumpyV0."""
+ 
+-import jax.numpy as jnp
+-import numpy as np
+ import pytest
++jnp = pytest.importorskip('jax.numpy')
++import numpy as np
+ 
+ from gymnasium.experimental.wrappers import JaxToNumpyV0
+ from gymnasium.experimental.wrappers.jax_to_numpy import jax_to_numpy, numpy_to_jax
+diff --git a/tests/experimental/wrappers/test_jax_to_torch.py b/tests/experimental/wrappers/test_jax_to_torch.py
+index a2313ae9..3c26f472 100644
+--- a/tests/experimental/wrappers/test_jax_to_torch.py
++++ b/tests/experimental/wrappers/test_jax_to_torch.py
+@@ -1,9 +1,9 @@
+ """Test suite for TorchToJaxV0."""
+ 
+-import jax.numpy as jnp
+-import numpy as np
+ import pytest
+-import torch
++jnp = pytest.importorskip('jax.numpy')
++torch = pytest.importorskip('torch')
++import numpy as np
+ 
+ from gymnasium.experimental.wrappers import JaxToTorchV0
+ from gymnasium.experimental.wrappers.jax_to_torch import jax_to_torch, torch_to_jax
+-- 
+2.40.0.windows.1
+
