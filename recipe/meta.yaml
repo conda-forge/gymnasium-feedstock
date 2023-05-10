@@ -111,6 +111,7 @@ outputs:
         - python
         - {{ pin_subpackage('gymnasium', exact=True) }}
         - ale-py >=0.8.0,<0.9
+        - shimmy-atari
     test:
       imports:
         - gymnasium.envs.atari
