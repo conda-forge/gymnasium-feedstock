@@ -81,8 +81,9 @@ outputs:
         - pytest
         - pip
         - jax >= 0.3.24  # [osx or linux64]
-        - pytorch-cpu >=1.0  # [not win and not ppc64le]
-        - gym  # [py < 311]
+        # conda-forge doesn't have pytorch on all platforms/arches yet
+        - pytorch >=1.0  # [unix and not ppc64le]
+        - gym            # [py<311]
       commands:
         - pip check
         {% set tests_to_skip = "_not_a_real_test" %}
