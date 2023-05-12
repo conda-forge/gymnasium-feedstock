@@ -117,8 +117,8 @@ outputs:
         - ale-py >=0.8.0,<0.9
         - shimmy-atari
     test:
-      imports:
-        - gymnasium.envs.atari
+      commands:
+        - echo "tested in shimmy-atari"
 
   - name: gymnasium-box2d
     requirements:
