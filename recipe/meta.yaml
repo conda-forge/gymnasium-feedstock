@@ -90,6 +90,8 @@ outputs:
       commands:
         - pip check
         {% set tests_to_skip = "_not_a_real_test" %}
+        # legacy gym is not available for python 3.11, nor on linux-aarch64/ppc64le
+        {% set tests_to_skip = tests_to_skip + " or test_shimmy_gym_compatibility" %}           # [py==311 or aarch64 or ppc64le]
         # the following pygame tests are skipped [according to selector], because there is no rendering support during the CI build
         {% set tests_to_skip = tests_to_skip + " or test_human_rendering" %}                    # [osx]
         {% set tests_to_skip = tests_to_skip + " or test_keyboard_irrelevant_keydown_event" %}  # [osx]
