@@ -1,4 +1,4 @@
-{% set version = "0.27.1" %}
+{% set version = "0.28.0" %}
 
 package:
   name: gymnasium-split
@@ -6,20 +6,19 @@ package:
 
 source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: bac0e8e1a9c672568d8673ec34588eb80807a2067964c3dc90a97d7fb2f51460
+  sha256: f425411ee10e598f5b1a57bb40f04edd444c1ebe454f0d483b660bc19e04eb31
   patches:
     # only for gymnasium <=0.28.1 (has been fixed upstream in #f6ceb08)
     - patches/0001-add-missing-phys2d-asset-in-setup.patch
-    # only for gymnasium <0.28.0
-    - patches/0002-fix-compatibility-version-mismatch.patch
     # only for gymnasium <=0.28.1 (has been fixed upstream in #4350e9c)
     - patches/0003-skip-if-jax-or-torch-is-missing.patch
     # only for gymnasium <=0.28.1 (has been fixed upstream in #50b12df)
     - patches/0004-skip-fork-start-method-if-not-available.patch
+    # only for gymnasium <=0.28.1 (has been fixed upstream in #f47caeb)
     - patches/0005-skip-mujoco-if-gl-not-available.patch
 
 build:
-  number: 2
+  number: 0
 
 # Need these up here for conda-smithy to handle them properly.
 requirements:
@@ -52,10 +51,9 @@ outputs:
       run:
         - python
         - cloudpickle >=1.2.0
-        - gymnasium-notices
+        - farama-notifications
         - numpy
-        - jax-jumpy <1.0.0  # for gymnasium <0.28.0
-        #- jax-jumpy >=1.0.0  # for gymnasium >=0.28.0
+        - jax-jumpy >=1.0.0
         - typing_extensions
         - importlib_metadata >=4.8.1  # [py<=39]
     test:
@@ -82,6 +80,7 @@ outputs:
       requires:
         - mock
         - pytest
+        - scipy
         - pip
         - jax >= 0.3.24  # [osx or linux64]
         # conda-forge doesn't have pytorch on all platforms/arches yet
