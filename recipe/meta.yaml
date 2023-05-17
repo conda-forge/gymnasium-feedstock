@@ -1,4 +1,4 @@
-{% set version = "0.27.1" %}
+{% set version = "0.28.1" %}
 
 package:
   name: gymnasium-split
@@ -6,20 +6,19 @@ package:
 
 source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: bac0e8e1a9c672568d8673ec34588eb80807a2067964c3dc90a97d7fb2f51460
+  sha256: 59dddc9ba631ed353cb6983cb3fff113c8619ef03142fd8474aa56bfccf9c424
   patches:
     # only for gymnasium <=0.28.1 (has been fixed upstream in #f6ceb08)
     - patches/0001-add-missing-phys2d-asset-in-setup.patch
-    # only for gymnasium <0.28.0
-    - patches/0002-fix-compatibility-version-mismatch.patch
     # only for gymnasium <=0.28.1 (has been fixed upstream in #4350e9c)
     - patches/0003-skip-if-jax-or-torch-is-missing.patch
     # only for gymnasium <=0.28.1 (has been fixed upstream in #50b12df)
     - patches/0004-skip-fork-start-method-if-not-available.patch
+    # only for gymnasium <=0.28.1 (has been fixed upstream in #f47caeb)
     - patches/0005-skip-mujoco-if-gl-not-available.patch
 
 build:
-  number: 2
+  number: 0
 
 # Need these up here for conda-smithy to handle them properly.
 requirements:
@@ -52,11 +51,10 @@ outputs:
       run:
         - python
         - cloudpickle >=1.2.0
-        - gymnasium-notices
+        - farama-notifications
         - numpy
-        - jax-jumpy <1.0.0  # for gymnasium <0.28.0
-        #- jax-jumpy >=1.0.0  # for gymnasium >=0.28.0
-        - typing_extensions
+        - jax-jumpy >=1.0.0
+        - typing_extensions >=4.3.0
         - importlib_metadata >=4.8.1  # [py<=39]
     test:
       imports:
@@ -82,16 +80,13 @@ outputs:
       requires:
         - mock
         - pytest
+        - scipy
         - pip
         - jax >= 0.3.24  # [osx or linux64]
         # conda-forge doesn't have pytorch on all platforms/arches yet
-        - pytorch >=1.0  # [unix and not ppc64le]
-        - gym            # [py<311]
       commands:
         - pip check
         {% set tests_to_skip = "_not_a_real_test" %}
-        # legacy gym is not available for python 3.11, nor on linux-aarch64/ppc64le
-        {% set tests_to_skip = tests_to_skip + " or test_shimmy_gym_compatibility" %}           # [py==311 or aarch64 or ppc64le]
         # the following pygame tests are skipped [according to selector], because there is no rendering support during the CI build
         {% set tests_to_skip = tests_to_skip + " or test_human_rendering" %}                    # [osx]
         {% set tests_to_skip = tests_to_skip + " or test_keyboard_irrelevant_keydown_event" %}  # [osx]
@@ -116,7 +111,6 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('gymnasium', exact=True) }}
-        - ale-py >=0.8.0,<0.9
         - shimmy-atari
     test:
       commands:
@@ -155,7 +149,7 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('gymnasium', exact=True) }}
-        - mujoco-python >=2.2.0,<=2.3.3
+        - mujoco-python >=2.3.2,<=2.3.3
         - imageio >=2.14.1
     test:
       imports:
@@ -201,6 +195,7 @@ outputs:
         - matplotlib >=3.0
         - moviepy >=1.0
         - py-opencv >=3.0
+        - pytorch >=1.0  # [unix and not ppc64le]
     test:
       imports:
         # There are no tests in the source code for gymnasium-other
