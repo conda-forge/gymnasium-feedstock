@@ -54,7 +54,7 @@ outputs:
         - farama-notifications
         - numpy
         - jax-jumpy >=1.0.0
-        - typing_extensions
+        - typing_extensions >=4.3.0
         - importlib_metadata >=4.8.1  # [py<=39]
     test:
       imports:
@@ -84,7 +84,6 @@ outputs:
         - pip
         - jax >= 0.3.24  # [osx or linux64]
         # conda-forge doesn't have pytorch on all platforms/arches yet
-        - pytorch >=1.0  # [unix and not ppc64le]
       commands:
         - pip check
         {% set tests_to_skip = "_not_a_real_test" %}
@@ -112,7 +111,6 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('gymnasium', exact=True) }}
-        - ale-py >=0.8.0,<0.9
         - shimmy-atari
     test:
       commands:
@@ -151,7 +149,7 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('gymnasium', exact=True) }}
-        - mujoco-python >=2.2.0,<=2.3.3
+        - mujoco-python >=2.3.2,<=2.3.3
         - imageio >=2.14.1
     test:
       imports:
@@ -197,6 +195,7 @@ outputs:
         - matplotlib >=3.0
         - moviepy >=1.0
         - py-opencv >=3.0
+        - pytorch >=1.0  # [unix and not ppc64le]
     test:
       imports:
         # There are no tests in the source code for gymnasium-other
