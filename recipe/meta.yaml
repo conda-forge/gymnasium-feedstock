@@ -1,4 +1,4 @@
-{% set version = "0.28.0" %}
+{% set version = "0.28.1" %}
 
 package:
   name: gymnasium-split
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: f425411ee10e598f5b1a57bb40f04edd444c1ebe454f0d483b660bc19e04eb31
+  sha256: 59dddc9ba631ed353cb6983cb3fff113c8619ef03142fd8474aa56bfccf9c424
   patches:
     # only for gymnasium <=0.28.1 (has been fixed upstream in #f6ceb08)
     - patches/0001-add-missing-phys2d-asset-in-setup.patch
