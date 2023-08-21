@@ -7,15 +7,6 @@ package:
 source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v{{ version }}.tar.gz
   sha256: 0bff5ff33335ffe170f9ccba544f7c4d78e7b4dd883337f2ee00f8ba3c6d85b5
-  patches:
-    # only for gymnasium <=0.28.1 (has been fixed upstream in #f6ceb08)
-    - patches/0001-add-missing-phys2d-asset-in-setup.patch
-    # only for gymnasium <=0.28.1 (has been fixed upstream in #4350e9c)
-    - patches/0003-skip-if-jax-or-torch-is-missing.patch
-    # only for gymnasium <=0.28.1 (has been fixed upstream in #50b12df)
-    - patches/0004-skip-fork-start-method-if-not-available.patch
-    # only for gymnasium <=0.28.1 (has been fixed upstream in #f47caeb)
-    - patches/0005-skip-mujoco-if-gl-not-available.patch
 
 build:
   number: 0
