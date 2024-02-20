@@ -141,7 +141,9 @@ outputs:
         - python
         - {{ pin_subpackage('gymnasium', exact=True) }}
         - cython <3
-        - mujoco-python >=2.3.3
+        # Maximum version of mujoco constraint required due to https://github.com/Farama-Foundation/Gymnasium/issues/749#issuecomment-1808355111, 
+        # remove once gymnasium v1.0.0 is released 
+        - mujoco-python >=2.3.3,<3.0.0
         - imageio >=2.14.1
     test:
       imports:
