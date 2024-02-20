@@ -74,6 +74,8 @@ outputs:
         - scipy
         - pip
         - jax >=0.4  # [osx or linux64]
+        # workaround for https://github.com/conda-forge/sdl2_ttf-feedstock/issues/18
+        - sdl2_ttf ==2.0.15  # [osx]
         # conda-forge doesn't have pytorch on all platforms/arches yet
       commands:
         - pip check
