@@ -18,7 +18,7 @@ source:
     - patches/0005-skip-mujoco-if-gl-not-available.patch
 
 build:
-  number: 0
+  number: 1
 
 # Need these up here for conda-smithy to handle them properly.
 requirements:
