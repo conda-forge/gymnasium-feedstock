@@ -76,6 +76,7 @@ outputs:
         - scipy
         - pip
         - jax >=0.4  # [osx or linux64]
+        - libdeflate ==1.19  # [linux]
         # conda-forge doesn't have pytorch on all platforms/arches yet
       commands:
         - pip check
