@@ -76,7 +76,8 @@ outputs:
         - scipy
         - pip
         - jax >=0.4  # [osx or linux64]
-        - libdeflate ==1.19  # [linux]
+        # workaround for https://github.com/conda-forge/gymnasium-feedstock/pull/32#issuecomment-2019835727
+        - noqt
         # conda-forge doesn't have pytorch on all platforms/arches yet
       commands:
         - pip check
