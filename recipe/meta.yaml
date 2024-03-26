@@ -77,6 +77,7 @@ outputs:
         - pip
         - jax >=0.4  # [osx or linux64]
         # conda-forge doesn't have pytorch on all platforms/arches yet
+        - mesalib  # [linux]
       commands:
         - pip check
         {% set tests_to_skip = "_not_a_real_test" %}
@@ -94,10 +95,9 @@ outputs:
         {% set tests_to_skip = tests_to_skip + " or test_pygame_quit_event" %}                  # [osx]
         {% set tests_to_skip = tests_to_skip + " or test_video_size_no_zoom" %}                 # [osx]
         {% set tests_to_skip = tests_to_skip + " or test_video_size_zoom" %}                    # [osx]
-        {% set additional_pytest_opts = additional_pytest_opts + " --ignore-glob='*/test_mujoco_custom_env.py'" %}                  # [aarch64 or ppc64le]
         # need to specify opengl driver on linux to enable offscreen rendering in MuJoCo
         - export MUJOCO_GL="osmesa"  # [linux]
-        - pytest -v tests/ -k "not ({{ tests_to_skip }})" {{ additional_pytest_opts }}
+        - pytest -v tests/ -k "not ({{ tests_to_skip }})"
 
   - name: gymnasium-atari
     requirements:
