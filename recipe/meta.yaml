@@ -78,8 +78,6 @@ outputs:
         - jax >=0.4  # [osx or linux64]
         # conda-forge doesn't have pytorch on all platforms/arches yet
         - mesalib  # [linux]
-        # Workaround for https://github.com/conda-forge/opencv-feedstock/issues/401
-        - libopencv *=headless*  # [linux]
       commands:
         - pip check
         {% set tests_to_skip = "_not_a_real_test" %}
