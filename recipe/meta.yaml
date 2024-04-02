@@ -75,7 +75,7 @@ outputs:
         - pytest
         - scipy
         - pip
-        - jax >=0.4  # [osx or linux64]
+        - jax >=0.4  # [osx or linux64 or aarch64]
         # conda-forge doesn't have pytorch on all platforms/arches yet
         - mesalib  # [linux]
       commands:
