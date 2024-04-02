@@ -335,4 +335,5 @@ Feedstock Maintainers
 * [@h-vetinari](https://github.com/h-vetinari/)
 * [@pseudo-rnd-thoughts](https://github.com/pseudo-rnd-thoughts/)
 * [@thewchan](https://github.com/thewchan/)
+* [@traversaro](https://github.com/traversaro/)
 
