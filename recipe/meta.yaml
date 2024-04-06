@@ -74,7 +74,7 @@ outputs:
         - scipy
         - dill
         - jax >=0.4  # [osx or linux64]
-        - flax  # [osx or linus64]
+        - flax  # [osx or linux64]
         - pytorch >=1.0  # [unix and not ppc64le]
         - mesalib  # [linux]
       commands:
