@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v{{ version }}a1.tar.gz
-  sha256: 0bff5ff33335ffe170f9ccba544f7c4d78e7b4dd883337f2ee00f8ba3c6d85b5
+  sha256: ef293c16f289ae0190a5d61e64e84ce2943f4b4da8019d33df0a079f4d6583e3
 
 build:
   number: 0
