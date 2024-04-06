@@ -44,7 +44,6 @@ outputs:
         - cloudpickle >=1.2.0
         - farama-notifications
         - numpy
-        - jax-jumpy >=1.0.0
         - typing_extensions >=4.3.0
         - importlib_metadata >=4.8.1  # [py<=39]
     test:
@@ -69,11 +68,14 @@ outputs:
       source_files:
         - tests/
       requires:
+        - pip
         - mock
         - pytest
         - scipy
-        - pip
+        - dill
         - jax >=0.4  # [osx or linux64]
+        - flax  # [osx or linus64]
+        - pytorch >=1.0  # [unix and not ppc64le]
         - mesalib  # [linux]
       commands:
         - pip check
@@ -189,7 +191,6 @@ outputs:
         - matplotlib >=3.0
         - moviepy >=1.0
         - py-opencv >=3.0
-        - pytorch >=1.0  # [unix and not ppc64le]
     test:
       imports:
         # There are no tests in the source code for gymnasium-other
