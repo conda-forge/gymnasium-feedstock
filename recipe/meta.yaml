@@ -144,7 +144,6 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('gymnasium', exact=True) }}
-        - cython <3
         - mujoco-python >=2.3.3
         - imageio >=2.14.1
     test:
