@@ -1,0 +1,44 @@
+From c72daa87f6eebf7a14057ab7e70ed8c74d021a4a Mon Sep 17 00:00:00 2001
+From: Silvio Traversaro <silvio@traversaro.it>
+Date: Tue, 21 May 2024 22:59:48 +0200
+Subject: [PATCH] mujoco_py_env: Only raise an exception if MuJocoPyEnv class
+ is actually used
+
+---
+ gymnasium/envs/mujoco/mujoco_py_env.py | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
+
+diff --git a/gymnasium/envs/mujoco/mujoco_py_env.py b/gymnasium/envs/mujoco/mujoco_py_env.py
+index 8d2949102..a15ac7a5a 100644
+--- a/gymnasium/envs/mujoco/mujoco_py_env.py
++++ b/gymnasium/envs/mujoco/mujoco_py_env.py
+@@ -12,11 +12,9 @@
+ try:
+     import mujoco_py
+ except ImportError as e:
+-    raise error.DependencyNotInstalled(
+-        "Could not import mujoco_py, which is needed for MuJoCo environments older than V4",
+-        "You could either use a newer version of the environments, or install the (deprecated) mujoco-py package"
+-        "following the instructions on their GitHub page.",
+-    ) from e
++    MUJOCO_PY_IMPORT_ERROR = e
++else:
++    MUJOCO_PY_IMPORT_ERROR = None
+ 
+ 
+ # NOTE: duplication of analogous code in mujoco_env.py
+@@ -214,6 +212,14 @@ def __init__(
+         camera_id: Optional[int] = None,
+         camera_name: Optional[str] = None,
+     ):
++        if MUJOCO_PY_IMPORT_ERROR is not None:
++            raise error.DependencyNotInstalled(
++                f"{MUJOCO_PY_IMPORT_ERROR}. "
++                "Could not import mujoco_py, which is needed for MuJoCo environments older than V4",
++                "You could either use a newer version of the environments, or install the (deprecated) mujoco-py package"
++                "following the instructions on their GitHub page.",
++            )
++        
+         logger.deprecation(
+             "This version of the mujoco environments depends "
+             "on the mujoco-py bindings, which are no longer maintained "
