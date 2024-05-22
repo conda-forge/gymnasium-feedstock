@@ -119,7 +119,7 @@ outputs:
         - export MUJOCO_GL="osmesa"  # [linux]
         # Ensure that pygame tests pass on osx,
         # see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124699477
-       - export SDL_VIDEODRIVER="dummy"  # [osx]
+        - export SDL_VIDEODRIVER="dummy"  # [osx]
         - pytest -v tests/ -k "not ({{ tests_to_skip }})"
 
   - name: gymnasium-atari
