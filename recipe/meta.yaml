@@ -82,6 +82,17 @@ outputs:
       commands:
         - pip check
         {% set tests_to_skip = "_not_a_real_test" %}
+        # This test requires mujoco_py, see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124082918
+        {% set tests_to_skip = tests_to_skip + " or test_verify_info_x_position" %}
+        {% set tests_to_skip = tests_to_skip + " or test_verify_info_y_position" %}
+        {% set tests_to_skip = tests_to_skip + " or test_verify_info_x_velocity" %}
+        {% set tests_to_skip = tests_to_skip + " or test_verify_info_y_velocity" %}
+        {% set tests_to_skip = tests_to_skip + " or test_verify_info_xy_velocity_xpos" %}
+        {% set tests_to_skip = tests_to_skip + " or test_verify_info_xy_velocity_com" %}
+        {% set tests_to_skip = tests_to_skip + " or test_set_state" %}
+        {% set tests_to_skip = tests_to_skip + " or test_distance_from_origin_info" %}
+        {% set tests_to_skip = tests_to_skip + " or test_model_sensors" %}
+        {% set tests_to_skip = tests_to_skip + " or test_reset_noise_scale" %}
         # the following pygame tests are skipped [according to selector], because there is no rendering support during the CI build
         {% set tests_to_skip = tests_to_skip + " or test_human_rendering" %}                    # [osx]
         {% set tests_to_skip = tests_to_skip + " or test_keyboard_irrelevant_keydown_event" %}  # [osx]
