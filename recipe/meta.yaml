@@ -115,6 +115,8 @@ outputs:
         {% set tests_to_skip = tests_to_skip + " or test_max_geom_attribute" %}                 # [osx]
         # See https://github.com/conda-forge/gymnasium-feedstock/pull/32#issuecomment-2031810613
         {% set tests_to_skip = tests_to_skip + " or test_render_modes" %}                       # [aarch64]
+        # https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124810832
+        {% set tests_to_skip = tests_to_skip + " or test_model_object_count[v5]" %}             # [py == 38]
         # need to specify opengl driver on linux to enable offscreen rendering in MuJoCo
         - export MUJOCO_GL="osmesa"  # [linux]
         # Ensure that pygame tests pass on osx,
