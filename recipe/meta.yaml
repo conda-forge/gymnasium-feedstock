@@ -80,7 +80,8 @@ outputs:
         - pytorch >=1.0  # [unix and not ppc64le]
         - mesalib  # [linux]
       commands:
-        - pip check
+        # On Python 3.8 do not do pip check, see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124179635
+        - pip check  # [py != 38]
         {% set tests_to_skip = "_not_a_real_test" %}
         # These test requires mujoco_py, see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124082918
         {% set tests_to_skip = tests_to_skip + " or test_verify_info_x_position" %}
