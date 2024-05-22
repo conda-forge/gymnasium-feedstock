@@ -111,12 +111,15 @@ outputs:
         {% set tests_to_skip = tests_to_skip + " or test_play_relevant_keys" %}                 # [osx]
         {% set tests_to_skip = tests_to_skip + " or test_pygame_quit_event" %}                  # [osx]
         {% set tests_to_skip = tests_to_skip + " or test_video_size_no_zoom" %}                 # [osx]
-        {% set tests_to_skip = tests_to_skip + " or test_offscreen_viewer_custom_dimensions" %}  # [osx]
-        {% set tests_to_skip = tests_to_skip + " or test_max_geom_attribute" %}                 # [osx]
+        {% set tests_to_skip = tests_to_skip + " or test_offscreen_viewer_custom_dimensions" %}  # [osx or win]
+        {% set tests_to_skip = tests_to_skip + " or test_max_geom_attribute" %}                 # [osx or win]
         # See https://github.com/conda-forge/gymnasium-feedstock/pull/32#issuecomment-2031810613
         {% set tests_to_skip = tests_to_skip + " or test_render_modes" %}                       # [aarch64]
         # https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124810832
         {% set tests_to_skip = tests_to_skip + " or test_model_object_count[v5]" %}             # [py == 38]
+        # This test use fork, that is not available on Windows
+        {% set tests_to_skip = tests_to_skip + " or test_async_with_dynamically_registered_env[fork" %}  # [win]
+        {% set tests_to_skip = tests_to_skip + " or test_shared_memory_create_read_write[fork" %}        # [win]
         # need to specify opengl driver on linux to enable offscreen rendering in MuJoCo
         - export MUJOCO_GL="osmesa"  # [linux]
         # Ensure that pygame tests pass on osx,
