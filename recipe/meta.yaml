@@ -9,6 +9,8 @@ source:
   sha256: 8e05eb7b41aaa2c7cd2fca7fc8f380ca38a814a5fdc67d9ce8614e5014c90683
   patches:
     - 1060.patch
+    # https://github.com/Farama-Foundation/Gymnasium/pull/1065
+    - 1065.patch
 
 build:
   number: 0
