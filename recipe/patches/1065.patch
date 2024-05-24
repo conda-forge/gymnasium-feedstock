@@ -1,0 +1,30 @@
+From 36e67165ba693cfe80bf2c6b02e5278fe435f9c8 Mon Sep 17 00:00:00 2001
+From: Silvio Traversaro <silvio@traversaro.it>
+Date: Fri, 24 May 2024 16:24:09 +0200
+Subject: [PATCH] Fix RescaleObservation on Windows
+
+---
+ gymnasium/wrappers/transform_observation.py | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/gymnasium/wrappers/transform_observation.py b/gymnasium/wrappers/transform_observation.py
+index b288c426c..a95daf6ce 100644
+--- a/gymnasium/wrappers/transform_observation.py
++++ b/gymnasium/wrappers/transform_observation.py
+@@ -517,9 +517,14 @@ def __init__(
+         self.max_obs = max_obs
+ 
+         # Imagine the x-axis between the old Box and the y-axis being the new Box
++        # float128 is not available everywhere
++        try:
++            high_low_diff_dtype = np.float128
++        except AttributeError:
++            high_low_diff_dtype = np.float64
+         high_low_diff = np.array(
+-            env.observation_space.high, dtype=np.float128
+-        ) - np.array(env.observation_space.low, dtype=np.float128)
++            env.observation_space.high, dtype=high_low_diff_dtype
++        ) - np.array(env.observation_space.low, dtype=high_low_diff_dtype)
+         gradient = np.array(
+             (max_obs - min_obs) / high_low_diff, dtype=env.observation_space.dtype
+         )
