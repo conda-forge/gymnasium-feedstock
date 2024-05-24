@@ -8,9 +8,10 @@ source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v{{ version }}a2.tar.gz
   sha256: 8e05eb7b41aaa2c7cd2fca7fc8f380ca38a814a5fdc67d9ce8614e5014c90683
   patches:
+    # https://github.com/Farama-Foundation/Gymnasium/pull/1060
     - 1060.patch
     # https://github.com/Farama-Foundation/Gymnasium/pull/1065
-    - 1065.patch
+    - patches/1065.patch
 
 build:
   number: 0
