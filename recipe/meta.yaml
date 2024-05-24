@@ -82,9 +82,8 @@ outputs:
         - flax  # [unix and not ppc64le]
         - pytorch >=1.0  # [unix and not ppc64le]
         - mesalib  # [linux]
+        - mujoco-python >=3.1.5
       commands:
-        # Debug aarch64 problem, remove at some point
-        - python -c "import jax"  # [unix and not ppc64le]
         # On Python 3.8 do not do pip check, see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124179635
         - pip check  # [py != 38]
         {% set tests_to_skip = "_not_a_real_test" %}
