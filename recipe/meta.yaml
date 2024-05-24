@@ -12,6 +12,8 @@ source:
     - 1060.patch
     # https://github.com/Farama-Foundation/Gymnasium/pull/1065
     - patches/1065.patch
+    # https://github.com/Farama-Foundation/Gymnasium/pull/1066
+    - patches/1066.patch
 
 build:
   number: 0
