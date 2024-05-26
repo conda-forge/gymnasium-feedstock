@@ -127,6 +127,8 @@ outputs:
         {% set tests_to_skip = tests_to_skip + " or test_render_modes" %}                       # [aarch64]
         # https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124810832
         {% set tests_to_skip = tests_to_skip + " or test_model_object_count[v5]" %}             # [py == 38]
+        # https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2132386189
+        {% set tests_to_skip = tests_to_skip + " or test_cartpole_vector_equiv" %}              # [py == 38]
         # This test use fork, that is not available on Windows
         {% set tests_to_skip = tests_to_skip + " or test_async_with_dynamically_registered_env[fork" %}  # [win]
         {% set tests_to_skip = tests_to_skip + " or test_shared_memory_create_read_write[fork" %}        # [win]
