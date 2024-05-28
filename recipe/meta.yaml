@@ -91,7 +91,7 @@ outputs:
         - mujoco-python
         # Use headless opencv for tests (see https://github.com/conda-forge/opencv-feedstock/issues/401)
         # This is especially useful when cross-compiling as tests are emulated but CDT may not be available
-        - libopencv *=headless*
+        - libopencv *=headless*  # [aarch64]
       commands:
         # On Python 3.8 do not do pip check, see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124179635
         - pip check  # [py != 38]
