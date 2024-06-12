@@ -84,8 +84,8 @@ outputs:
         # https://github.com/conda-forge/jax-feedstock/pull/123
         # jax is not properly working in linux-aarch64
         # https://github.com/conda-forge/jax-feedstock/issues/144
-        - jax >=0.4  # [unix and not ppc64le and not aarch64 and py != 38]
-        - flax  # [unix and not ppc64le and not aarch64 and py != 38]
+        - jax >=0.4      # [unix and not (aarch64 or ppc64le or py==38)]
+        - flax           # [unix and not (aarch64 or ppc64le or py==38)]
         - pytorch >=1.0  # [unix and not ppc64le]
         - mesalib  # [linux]
         - mujoco-python
