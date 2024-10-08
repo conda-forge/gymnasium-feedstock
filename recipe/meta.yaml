@@ -100,7 +100,8 @@ outputs:
         {% set tests_to_skip = tests_to_skip + " or test_render_modes" %}                       # [aarch64]
         # need to specify opengl driver on linux to enable offscreen rendering in MuJoCo
         - export MUJOCO_GL="osmesa"  # [linux]
-        - pytest -v tests/ -k "not ({{ tests_to_skip }})"
+        # atary test are skipped as we do not have atari ROMs in the CI
+        - pytest --ignore-glob='*atari*'. -v tests/ -k "not ({{ tests_to_skip }})"
 
   - name: gymnasium-atari
     requirements:
