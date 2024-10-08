@@ -76,6 +76,7 @@ outputs:
         - scipy
         - pip
         - jax >=0.4  # [osx or linux64]
+        - flax >=0.5.0  # [osx or linux64]
         - mesalib  # [linux]
       commands:
         # Uncomment when https://github.com/conda-forge/proglog-feedstock/pull/3 is merged
