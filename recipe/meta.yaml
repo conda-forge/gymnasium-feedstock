@@ -101,7 +101,8 @@ outputs:
         # need to specify opengl driver on linux to enable offscreen rendering in MuJoCo
         - export MUJOCO_GL="osmesa"  # [linux]
         # atary test are skipped as we do not have atari ROMs in the CI
-        - pytest --ignore-glob='*atari*'. -v tests/ -k "not ({{ tests_to_skip }})"
+        - rm tests/wrappers/test_atari_preprocessing.py  # [unix]
+        - pytest -v tests/ -k "not ({{ tests_to_skip }})"
 
   - name: gymnasium-atari
     requirements:
