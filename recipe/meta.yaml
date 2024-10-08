@@ -78,7 +78,8 @@ outputs:
         - jax >=0.4  # [osx or linux64]
         - mesalib  # [linux]
       commands:
-        - pip check
+        # Uncomment when https://github.com/conda-forge/proglog-feedstock/pull/3 is merged
+        # - pip check
         {% set tests_to_skip = "_not_a_real_test" %}
         # the following pygame tests are skipped [according to selector], because there is no rendering support during the CI build
         {% set tests_to_skip = tests_to_skip + " or test_human_rendering" %}                    # [osx]
