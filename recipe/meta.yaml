@@ -8,9 +8,6 @@ package:
 source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v{{ version }}.tar.gz
   sha256: d61a54c70d1960a0b64c63fe87edc30a0bac09551c27d8d94c36c54bf5fae5d9
-  patches:
-    # https://github.com/Farama-Foundation/Gymnasium/pull/932
-    - patches/932.patch
 
 build:
   number: 0
@@ -41,6 +38,7 @@ outputs:
       host:
         - python
         - pip
+        - setuptools
         - cloudpickle >=1.2.0
         - numpy
       run:
@@ -146,10 +144,7 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('gymnasium', exact=True) }}
-        - cython <3
-        # Maximum version of mujoco constraint required due to https://github.com/Farama-Foundation/Gymnasium/issues/749#issuecomment-1808355111, 
-        # remove once gymnasium v1.0.0 is released 
-        - mujoco-python >=2.3.3,<3.0.0
+        - mujoco-python
         - imageio >=2.14.1
     test:
       imports:
