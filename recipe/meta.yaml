@@ -78,10 +78,9 @@ outputs:
         - pip
         - jax >=0.4  # [osx or linux64]
         - flax >=0.5.0  # [osx or linux64]
-        - mesalib  # [linux]
+        - mesalib  # [linux or osx]
       commands:
-        # Uncomment when https://github.com/conda-forge/proglog-feedstock/pull/3 is merged
-        # - pip check
+        - pip check
         {% set tests_to_skip = "_not_a_real_test" %}
         # These test requires mujoco_py, see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124082918
         {% set tests_to_skip = tests_to_skip + " or test_verify_info_x_position" %}
@@ -115,9 +114,10 @@ outputs:
         # See https://github.com/conda-forge/gymnasium-feedstock/pull/32#issuecomment-2031810613
         {% set tests_to_skip = tests_to_skip + " or test_render_modes" %}                       # [aarch64]
         # need to specify opengl driver on linux to enable offscreen rendering in MuJoCo
-        - export MUJOCO_GL="osmesa"  # [linux]
-        # atary test are skipped as we do not have atari ROMs in the CI
-        - rm tests/wrappers/test_atari_preprocessing.py  # [unix]
+        - export MUJOCO_GL="osmesa"  # [linux or osx]
+        # Ensure that pygame tests pass on osx,
+        # see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124699477
+        - export SDL_VIDEODRIVER="dummy"  # [osx]
         - pytest -v tests/ -k "not ({{ tests_to_skip }})"
 
   - name: gymnasium-atari
@@ -127,10 +127,10 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('gymnasium', exact=True) }}
-        - shimmy-atari
+        - ale-py >= 0.9
     test:
       commands:
-        - echo "tested in shimmy-atari"
+        - echo "tested in ale-py"
 
   - name: gymnasium-box2d
     requirements:
