@@ -168,7 +168,8 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('gymnasium', exact=True) }}
-        - mujoco-python
+        # See https://github.com/Farama-Foundation/Gymnasium/pull/1221
+        - mujoco-python >=2.3.6
         - imageio >=2.14.1
     test:
       imports:
