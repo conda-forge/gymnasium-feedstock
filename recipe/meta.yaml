@@ -78,6 +78,9 @@ outputs:
         - jax >=0.4  # [osx or linux64]
         - flax >=0.5.0  # [osx or linux64]
         - mesalib  # [linux or osx]
+        # Just for tests a newer version of mujoco is required
+        # See https://github.com/Farama-Foundation/Gymnasium/pull/1221#issuecomment-2424973616
+        - mujoco-python >=2.3.6
       commands:
         - pip check
         {% set tests_to_skip = "_not_a_real_test" %}
@@ -168,8 +171,7 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('gymnasium', exact=True) }}
-        # See https://github.com/Farama-Foundation/Gymnasium/pull/1221
-        - mujoco-python >=2.3.6
+        - mujoco-python >=2.1.5
         - imageio >=2.14.1
     test:
       imports:
