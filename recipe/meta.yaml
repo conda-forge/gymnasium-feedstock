@@ -75,8 +75,6 @@ outputs:
       requires:
         - mock
         - pytest
-        # Workaround for https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2428944434
-        - pytest-forked  # [aarch64]
         - scipy
         - dill
         - pip
@@ -88,9 +86,6 @@ outputs:
         - mujoco-python >=2.3.6
       commands:
         - pip check
-        {% set pytest_options = "" %}
-        # Workaround for https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2428944434
-        {% set pytest_options = pytest_options +  " --forked" %}  # [aarch64]
         {% set tests_to_skip = "_not_a_real_test" %}
         # These test requires mujoco_py, see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124082918
         {% set tests_to_skip = tests_to_skip + " or test_verify_info_x_position" %}
@@ -141,7 +136,7 @@ outputs:
         # Ensure that pygame tests pass on osx,
         # see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124699477
         - export SDL_VIDEODRIVER="dummy"  # [osx]
-        - pytest {{ pytest_options }} -v tests/ -k "not ({{ tests_to_skip }})"
+        - pytest -v tests/ -k "not ({{ tests_to_skip }})"
 
   - name: gymnasium-atari
     requirements:
