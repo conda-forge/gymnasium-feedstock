@@ -75,6 +75,8 @@ outputs:
       requires:
         - mock
         - pytest
+        # Workaround for https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2428944434
+        - pytest-forked  # [aarch64]
         - scipy
         - dill
         - pip
@@ -86,6 +88,9 @@ outputs:
         - mujoco-python >=2.3.6
       commands:
         - pip check
+        {% set pytest_options = "" %}
+        # Workaround for https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2428944434
+        {% set pytest_options = pytest_options +  " --forked" %}  # [aarch64]
         {% set tests_to_skip = "_not_a_real_test" %}
         # These test requires mujoco_py, see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124082918
         {% set tests_to_skip = tests_to_skip + " or test_verify_info_x_position" %}
@@ -124,9 +129,6 @@ outputs:
         {% set tests_to_skip = tests_to_skip + " or test_num_envs_screen_size" %}                 # [osx or win]
         # See https://github.com/conda-forge/gymnasium-feedstock/pull/32#issuecomment-2031810613
         {% set tests_to_skip = tests_to_skip + " or test_render_modes" %}                       # [aarch64]
-        # This test segfaults on aarch64, probably due to qemu,
-        # see https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2428944434
-        {% set tests_to_skip = tests_to_skip + " or test_resize" %}         # [aarch64]
         # atary test are skipped as we do not have atari ROMs in the CI
         # See https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2404215826
         - rm tests/wrappers/test_atari_preprocessing.py  # [unix]
@@ -136,7 +138,7 @@ outputs:
         # Ensure that pygame tests pass on osx,
         # see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124699477
         - export SDL_VIDEODRIVER="dummy"  # [osx]
-        - pytest -v tests/ -k "not ({{ tests_to_skip }})"
+        - pytest {{ pytest_options }} -v tests/ -k "not ({{ tests_to_skip }})"
 
   - name: gymnasium-atari
     requirements:
