@@ -1,4 +1,4 @@
-{% set version = "0.29.1" %}
+{% set version = "1.0.0" %}
 
 package:
   name: gymnasium-split
@@ -6,13 +6,13 @@ package:
 
 source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 0bff5ff33335ffe170f9ccba544f7c4d78e7b4dd883337f2ee00f8ba3c6d85b5
+  sha256: d61a54c70d1960a0b64c63fe87edc30a0bac09551c27d8d94c36c54bf5fae5d9
   patches:
-    # https://github.com/Farama-Foundation/Gymnasium/pull/932
-    - patches/932.patch
+    # backport https://github.com/Farama-Foundation/Gymnasium/pull/1222
+    - patches/1222.patch
 
 build:
-  number: 1
+  number: 0
 
 # Need these up here for conda-smithy to handle them properly.
 requirements:
@@ -40,6 +40,7 @@ outputs:
       host:
         - python
         - pip
+        - setuptools
         - cloudpickle >=1.2.0
         - numpy
       run:
@@ -75,12 +76,33 @@ outputs:
         - mock
         - pytest
         - scipy
+        - dill
         - pip
         - jax >=0.4  # [osx or linux64]
+        - flax >=0.5.0  # [osx or linux64]
         - mesalib  # [linux]
+        # Just for tests a newer version of mujoco is required
+        # See https://github.com/Farama-Foundation/Gymnasium/pull/1221#issuecomment-2424973616
+        - mujoco-python >=2.3.6
       commands:
         - pip check
         {% set tests_to_skip = "_not_a_real_test" %}
+        # These test requires mujoco_py, see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124082918
+        {% set tests_to_skip = tests_to_skip + " or test_verify_info_x_position" %}
+        {% set tests_to_skip = tests_to_skip + " or test_verify_info_y_position" %}
+        {% set tests_to_skip = tests_to_skip + " or test_verify_info_x_velocity" %}
+        {% set tests_to_skip = tests_to_skip + " or test_verify_info_y_velocity" %}
+        {% set tests_to_skip = tests_to_skip + " or test_verify_info_xy_velocity_xpos" %}
+        {% set tests_to_skip = tests_to_skip + " or test_verify_info_xy_velocity_com" %}
+        {% set tests_to_skip = tests_to_skip + " or test_set_state" %}
+        {% set tests_to_skip = tests_to_skip + " or test_distance_from_origin_info" %}
+        {% set tests_to_skip = tests_to_skip + " or test_model_sensors" %}
+        {% set tests_to_skip = tests_to_skip + " or test_reset_noise_scale" %}
+        # These tests do not run on CI due to missing window system, see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124183361
+        {% set tests_to_skip = tests_to_skip + " or test_max_geom_attribute[10-human]" %}
+        {% set tests_to_skip = tests_to_skip + " or test_max_geom_attribute[100-human]" %}
+        {% set tests_to_skip = tests_to_skip + " or test_max_geom_attribute[1000-human]" %}
+        {% set tests_to_skip = tests_to_skip + " or test_max_geom_attribute[10000-human]" %}
         # the following pygame tests are skipped [according to selector], because there is no rendering support during the CI build
         {% set tests_to_skip = tests_to_skip + " or test_human_rendering" %}                    # [osx]
         {% set tests_to_skip = tests_to_skip + " or test_keyboard_irrelevant_keydown_event" %}  # [osx]
@@ -94,10 +116,26 @@ outputs:
         {% set tests_to_skip = tests_to_skip + " or test_pygame_quit_event" %}                  # [osx]
         {% set tests_to_skip = tests_to_skip + " or test_video_size_no_zoom" %}                 # [osx]
         {% set tests_to_skip = tests_to_skip + " or test_video_size_zoom" %}                    # [osx]
+        # The following tests fail as for mujoco the osmesa rendering backend is only supported on Linux
+        # See https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2428691450
+        {% set tests_to_skip = tests_to_skip + " or test_offscreen_viewer_custom_dimensions" %}   # [osx or win]
+        {% set tests_to_skip = tests_to_skip + " or test_max_geom_attribute" %}                   # [osx or win]
+        {% set tests_to_skip = tests_to_skip + " or test_camera_id" %}                            # [osx or win]
+        {% set tests_to_skip = tests_to_skip + " or test_num_envs_screen_size" %}                 # [osx or win]
         # See https://github.com/conda-forge/gymnasium-feedstock/pull/32#issuecomment-2031810613
         {% set tests_to_skip = tests_to_skip + " or test_render_modes" %}                       # [aarch64]
+        # atary test are skipped as we do not have atari ROMs in the CI
+        # See https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2404215826
+        - rm tests/wrappers/test_atari_preprocessing.py  # [unix]
+        - del tests\\wrappers\\test_atari_preprocessing.py  # [win]
         # need to specify opengl driver on linux to enable offscreen rendering in MuJoCo
         - export MUJOCO_GL="osmesa"  # [linux]
+        # Workaround for https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2429842932
+        # Remove once test run under a glibc 2.32 distro
+        - export LD_PRELOAD=libgomp.so.1  # [aarch64]
+        # Ensure that pygame tests pass on osx,
+        # see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124699477
+        - export SDL_VIDEODRIVER="dummy"  # [osx]
         - pytest -v tests/ -k "not ({{ tests_to_skip }})"
 
   - name: gymnasium-atari
@@ -107,10 +145,10 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('gymnasium', exact=True) }}
-        - shimmy-atari
+        - ale-py >=0.9
     test:
       commands:
-        - echo "tested in shimmy-atari"
+        - echo "tested in ale-py"
 
   - name: gymnasium-box2d
     requirements:
@@ -145,10 +183,7 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('gymnasium', exact=True) }}
-        - cython <3
-        # Maximum version of mujoco constraint required due to https://github.com/Farama-Foundation/Gymnasium/issues/749#issuecomment-1808355111, 
-        # remove once gymnasium v1.0.0 is released 
-        - mujoco-python >=2.3.3,<3.0.0
+        - mujoco-python >=2.1.5
         - imageio >=2.14.1
     test:
       imports:

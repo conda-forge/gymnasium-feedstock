@@ -1,0 +1,31 @@
+From 90000eb6dd53009bbb4d6c44cbeb40a1e072e559 Mon Sep 17 00:00:00 2001
+From: Silvio Traversaro <silvio@traversaro.it>
+Date: Sun, 20 Oct 2024 17:22:45 +0200
+Subject: [PATCH 1/2] Use multiprocessing.get_all_start_methods() in
+ test_async_with_dynamically_registered_env
+
+---
+ tests/envs/registration/test_make_vec.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/tests/envs/registration/test_make_vec.py b/tests/envs/registration/test_make_vec.py
+index 64573ca6d..ce14f7cb8 100644
+--- a/tests/envs/registration/test_make_vec.py
++++ b/tests/envs/registration/test_make_vec.py
+@@ -1,5 +1,6 @@
+ """Testing of the `gym.make_vec` function."""
+ 
++import multiprocessing
+ import re
+ 
+ import pytest
+@@ -236,7 +237,7 @@ def test_make_vec_with_spec(env_id: str, kwargs: dict):
+     recreated_envs.close()
+ 
+ 
+-@pytest.mark.parametrize("ctx", [None, "spawn", "fork", "forkserver"])
++@pytest.mark.parametrize("ctx", [None] + multiprocessing.get_all_start_methods())
+ def test_async_with_dynamically_registered_env(ctx):
+     gym.register("TestEnv-v0", CartPoleEnv)
+ 
+
