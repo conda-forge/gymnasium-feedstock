@@ -126,7 +126,7 @@ outputs:
         {% set tests_to_skip = tests_to_skip + " or test_render_modes" %}                       # [aarch64]
         # This test segfaults on aarch64, probably due to qemu,
         # see https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2428944434
-        {% set tests_to_skip = tests_to_skip + " or test_resize_observation_wrapper" %}         # [aarch64]
+        {% set tests_to_skip = tests_to_skip + " or test_resize" %}         # [aarch64]
         # atary test are skipped as we do not have atari ROMs in the CI
         # See https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2404215826
         - rm tests/wrappers/test_atari_preprocessing.py  # [unix]
