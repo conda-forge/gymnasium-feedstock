@@ -135,6 +135,9 @@ outputs:
         - del tests\\wrappers\\test_atari_preprocessing.py  # [win]
         # need to specify opengl driver on linux to enable offscreen rendering in MuJoCo
         - export MUJOCO_GL="osmesa"  # [linux]
+        # Workaround for https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2429842932
+        # Remove once test run under a glibc 2.32 distro
+        - export LD_PRELOAD=libgomp.so.1  # [aarch64]
         # Ensure that pygame tests pass on osx,
         # see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124699477
         - export SDL_VIDEODRIVER="dummy"  # [osx]
