@@ -1,23 +1,27 @@
-MACOSX_DEPLOYMENT_TARGET:
-- '11.0'
-MACOSX_SDK_VERSION:
-- '11.0'
+BUILD:
+- aarch64-conda_cos7-linux-gnu
+attr:
+- '2.5'
+cdt_arch:
+- aarch64
+cdt_name:
+- conda
 channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
-macos_machine:
-- arm64-apple-darwin20.0.0
+docker_image:
+- quay.io/condaforge/linux-anvil-cos7-x86_64
 numpy:
-- '1.26'
+- '2.0'
 pin_run_as_build:
   python:
     min_pin: x.x
     max_pin: x.x
 python:
-- 3.12.* *_cpython
+- 3.11.* *_cpython
 target_platform:
-- osx-arm64
+- linux-aarch64
 zip_keys:
 - - python
   - numpy
