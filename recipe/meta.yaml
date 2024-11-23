@@ -47,7 +47,6 @@ outputs:
         - python
         - cloudpickle >=1.2.0
         - farama-notifications
-        - numpy
         - jax-jumpy >=1.0.0
         - typing_extensions >=4.3.0
         - importlib_metadata >=4.8.1  # [py<=39]
