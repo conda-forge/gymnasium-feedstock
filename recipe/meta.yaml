@@ -8,9 +8,7 @@ package:
 source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v{{ version }}.tar.gz
   sha256: 5c67fc365e4b881d3858f22450c6aba60140f697196c4b07b79df5d5c54172ff
-  patches:
-    # backport https://github.com/Farama-Foundation/Gymnasium/pull/1222
-    - patches/1222.patch
+
 
 build:
   number: 0
