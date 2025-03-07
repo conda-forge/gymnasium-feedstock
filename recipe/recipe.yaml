@@ -1,7 +1,7 @@
 schema_version: 1
 
 context:
-  version: 1.0.0
+  version: 1.1.1
 
 recipe:
   name: gymnasium-split
@@ -9,7 +9,7 @@ recipe:
 
 source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v${{ version }}.tar.gz
-  sha256: d61a54c70d1960a0b64c63fe87edc30a0bac09551c27d8d94c36c54bf5fae5d9
+  sha256: 7883c878c1ed5bcc7a5ba621ac859d23be9a26baea9f2a42596dc072143b0619
   patches:
     # backport https://github.com/Farama-Foundation/Gymnasium/pull/1222
     - patches/1222.patch
@@ -17,7 +17,7 @@ source:
     - patches/1361.patch
 
 build:
-  number: 2
+  number: 0
 
 outputs:
   - package:
