@@ -1,7 +1,7 @@
 schema_version: 1
 
 context:
-  version: 1.1.1
+  version: 1.2.0
 
 recipe:
   name: gymnasium-split
@@ -9,13 +9,13 @@ recipe:
 
 source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v${{ version }}.tar.gz
-  sha256: 7883c878c1ed5bcc7a5ba621ac859d23be9a26baea9f2a42596dc072143b0619
+  sha256: 4b1952813ce4425a39487670d964999d06f9cb89b6e84e72aa68e8af3afc2d74
   patches:
     # backport https://github.com/Farama-Foundation/Gymnasium/pull/1361
     - patches/0001-Fix-jax-0.6.0-regression-in-jax_to_numpy-and-jax_to_.patch
 
 build:
-  number: 1
+  number: 0
 
 outputs:
   - package:
