@@ -219,6 +219,9 @@ outputs:
         - moviepy >=1.0
         - matplotlib-base >=3.0
         - py-opencv >=3.0
+    tests:
+      - script:
+          - echo "no tests"
 
 about:
   license: MIT
