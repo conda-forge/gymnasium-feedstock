@@ -3,22 +3,6 @@ schema_version: 1
 
 context:
   version: 1.0.0
-  tests_to_skip: >
-    _not_a_real_test
-    or test_verify_info_x_position
-    or test_verify_info_y_position
-    or test_verify_info_x_velocity
-    or test_verify_info_y_velocity
-    or test_verify_info_xy_velocity_xpos
-    or test_verify_info_xy_velocity_com
-    or test_set_state
-    or test_distance_from_origin_info
-    or test_model_sensors
-    or test_reset_noise_scale
-    or test_max_geom_attribute[10-human]
-    or test_max_geom_attribute[100-human]
-    or test_max_geom_attribute[1000-human]
-    or test_max_geom_attribute[10000-human]
 
 recipe:
   name: gymnasium-split
@@ -74,28 +58,10 @@ outputs:
         - ${{ pin_subpackage('gymnasium-toy_text', exact=True) }}
         - ${{ pin_subpackage('gymnasium-other', exact=True) }}
     tests:
-      - files:
-          source:
-            - tests/
-        requirements:
-          run:
-            - python ${{ python_min }}.*
-            - mock
-            - pytest
-            - scipy
-            - dill
-            - pip
-            - jax >=0.4
-            - flax >=0.5.0
-            - mesalib
-            # Just for tests a newer version of mujoco is required
-            # See https://github.com/Farama-Foundation/Gymnasium/pull/1221#issuecomment-2424973616
-            - mujoco-python >=2.3.6
-        script:
-          - pip check
-          - rm tests/wrappers/test_atari_preprocessing.py
-          - export MUJOCO_GL="osmesa"
-          - pytest -v tests/ -k "not (${{ tests_to_skip }})"
+      - python:
+          imports:
+            - gymnasium
+          pip_check: true
   - package:
       name: gymnasium-atari
     requirements:
