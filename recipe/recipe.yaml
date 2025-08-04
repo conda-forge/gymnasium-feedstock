@@ -148,6 +148,9 @@ outputs:
             - gymnasium.envs.classic_control
   - package:
       name: gymnasium-jax
+    build:
+      skip:
+        - linux and aarch64
     requirements:
       host:
         - python ==${{ python_min }}
@@ -198,6 +201,9 @@ outputs:
             - gymnasium.envs.mujoco
   - package:
       name: gymnasium-torch
+    build:
+      skip:
+        - ppc64le
     requirements:
       host:
         - python ==${{ python_min }}
