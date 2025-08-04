@@ -17,7 +17,8 @@ source:
 
 build:
   number: 2
-  noarch: python
+  python:
+    version_independent: true
 
 outputs:
   - package:
@@ -59,9 +60,31 @@ outputs:
         - ${{ pin_subpackage('gymnasium-other', exact=True) }}
     tests:
       - python:
+          python_version: ${{ python_min }}.*
+          pip_check: true
           imports:
             - gymnasium
-          pip_check: true
+      - files:
+          source:
+            - scripts/
+            - tests/
+        requirements:
+          run:
+            - python ${{ python_min }}.*
+            - mock
+            - pytest
+            - scipy
+            - dill
+            - pip
+            - mesalib
+            # Just for tests a newer version of mujoco is required
+            # See https://github.com/Farama-Foundation/Gymnasium/pull/1221#issuecomment-2424973616
+            - mujoco-python >=2.3.6
+        script:
+          - if: unix
+            then: scripts/test.sh
+          - if: win
+            then: scripts/test.bat
   - package:
       name: gymnasium-atari
     requirements:
@@ -86,6 +109,7 @@ outputs:
         - pygame >=2.1.3
     tests:
       - python:
+          python_version: ${{ python_min }}.*
           imports:
             - gymnasium.envs.box2d
   - package:
@@ -99,6 +123,7 @@ outputs:
         - pygame >=2.1.3
     tests:
       - python:
+          python_version: ${{ python_min }}.*
           imports:
             - gymnasium.envs.classic_control
   - package:
@@ -111,6 +136,7 @@ outputs:
         - ${{ pin_subpackage('gymnasium-classic-control', exact=True) }}
     tests:
       - python:
+          python_version: ${{ python_min }}.*
           imports:
             - gymnasium.envs.classic_control
   - package:
@@ -126,6 +152,7 @@ outputs:
         - flax >= 0.5.0
     tests:
       - python:
+          python_version: ${{ python_min }}.*
           imports:
             - gymnasium.wrappers.jax_to_numpy
   - package:
@@ -140,6 +167,7 @@ outputs:
         - imageio >=2.14.1
     tests:
       - python:
+          python_version: ${{ python_min }}.*
           imports:
             - gymnasium.envs.mujoco
   - package:
@@ -158,6 +186,7 @@ outputs:
         - imageio >=2.14.1
     tests:
       - python:
+          python_version: ${{ python_min }}.*
           imports:
             - gymnasium.envs.mujoco
   - package:
@@ -171,6 +200,7 @@ outputs:
         - pytorch >= 1.0.0
     tests:
       - python:
+          python_version: ${{ python_min }}.*
           imports:
             - gymnasium.wrappers.numpy_to_torch
   - package:
@@ -184,6 +214,7 @@ outputs:
         - pygame >=2.1.3
     tests:
       - python:
+          python_version: ${{ python_min }}.*
           imports:
             - gymnasium.envs.toy_text
   - package:
@@ -196,6 +227,7 @@ outputs:
         - ${{ pin_subpackage('gymnasium-toy-text', exact=True) }}
     tests:
       - python:
+          python_version: ${{ python_min }}.*
           imports:
             - gymnasium.envs.toy_text
   - package:
