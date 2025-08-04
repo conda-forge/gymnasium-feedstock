@@ -21,7 +21,7 @@ TESTS_TO_SKIP="$TESTS_TO_SKIP or test_max_geom_attribute[10-human]"
 TESTS_TO_SKIP="$TESTS_TO_SKIP or test_max_geom_attribute[100-human]"
 TESTS_TO_SKIP="$TESTS_TO_SKIP or test_max_geom_attribute[1000-human]"
 TESTS_TO_SKIP="$TESTS_TO_SKIP or test_max_geom_attribute[10000-human]"
-if [[ "$(uname -s)" == Darwin* ]]; then
+if [[ "$CONFIG" == osx_* ]]; then
     # the following pygame tests are skipped [according to selector], because there is no rendering support during the CI build
     TESTS_TO_SKIP="$TESTS_TO_SKIP or test_human_rendering"
     TESTS_TO_SKIP="$TESTS_TO_SKIP or test_keyboard_irrelevant_keydown_event"
@@ -41,10 +41,12 @@ if [[ "$(uname -s)" == Darwin* ]]; then
     TESTS_TO_SKIP="$TESTS_TO_SKIP or test_max_geom_attribute"
     TESTS_TO_SKIP="$TESTS_TO_SKIP or test_camera_id"
     TESTS_TO_SKIP="$TESTS_TO_SKIP or test_num_envs_screen_size"
+else
+    # need to specify opengl driver on linux to enable offscreen rendering in MuJoCo
+    export MUJOCO_GL="osmesa"
 fi
 
-
-if [[ "$(uname -m)" == aarch64 ]]; then
+if [[ "$CONFIG" == linux_aarch64_ ]]; then
     # See https://github.com/conda-forge/gymnasium-feedstock/pull/32#issuecomment-2031810613
     TESTS_TO_SKIP="$TESTS_TO_SKIP or test_render_modes"
     # Workaround for https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2429842932
@@ -54,8 +56,6 @@ fi
 # atari test are skipped as we do not have atari ROMs in the CI
 # See https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2404215826
 rm tests/wrappers/test_atari_preprocessing.py
-# need to specify opengl driver on linux to enable offscreen rendering in MuJoCo
-export MUJOCO_GL="osmesa"
 # Ensure that pygame tests pass on unix,
 # see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124699477
 export SDL_VIDEODRIVER="dummy"
