@@ -89,7 +89,7 @@ outputs:
           imports:
             - gymnasium.envs.box2d
   - package:
-      name: gymnasium-classic_control
+      name: gymnasium-classic-control
     requirements:
       host:
         - python ==${{ python_min }}
@@ -97,6 +97,18 @@ outputs:
         - python >=${{ python_min }}
         - ${{ pin_subpackage('gymnasium', exact=True) }}
         - pygame >=2.1.3
+    tests:
+      - python:
+          imports:
+            - gymnasium.envs.classic_control
+  - package:
+      name: gymnasium-classic_control
+    requirements:
+      host:
+        - python ==${{ python_min }}
+      run:
+        - python >=${{ python_min }}
+        - ${{ pin_subpackage('gymnasium-classic-control', exact=True) }}
     tests:
       - python:
           imports:
@@ -131,7 +143,7 @@ outputs:
           imports:
             - gymnasium.envs.mujoco
   - package:
-      name: gymnasium-mujoco_py
+      name: gymnasium-mujoco-py
     build:
       # we currently don't have https://github.com/openai/mujoco-py
       # in conda-forge, and it'll be replaced by mujoco anyway
@@ -162,7 +174,7 @@ outputs:
           imports:
             - gymnasium.wrappers.numpy_to_torch
   - package:
-      name: gymnasium-toy_text
+      name: gymnasium-toy-text
     requirements:
       host:
         - python ==${{ python_min }}
@@ -170,6 +182,18 @@ outputs:
         - python >=${{ python_min }}
         - ${{ pin_subpackage('gymnasium', exact=True) }}
         - pygame >=2.1.3
+    tests:
+      - python:
+          imports:
+            - gymnasium.envs.toy_text
+  - package:
+      name: gymnasium-toy_text
+    requirements:
+      host:
+        - python ==${{ python_min }}
+      run:
+        - python >=${{ python_min }}
+        - ${{ pin_subpackage('gymnasium-toy-text', exact=True) }}
     tests:
       - python:
           imports:
