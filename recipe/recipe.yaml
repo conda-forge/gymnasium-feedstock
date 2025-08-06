@@ -83,7 +83,8 @@ outputs:
             - scipy
             - dill
             - pip
-            - mesalib
+            - if: not win
+              then: mesalib
             # Just for tests a newer version of mujoco is required
             # See https://github.com/Farama-Foundation/Gymnasium/pull/1221#issuecomment-2424973616
             - mujoco-python >=2.3.6
