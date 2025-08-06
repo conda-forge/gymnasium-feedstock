@@ -56,7 +56,7 @@ outputs:
         - ${{ pin_subpackage('gymnasium-atari', exact=True) }}
         - ${{ pin_subpackage('gymnasium-box2d', exact=True) }}
         - ${{ pin_subpackage('gymnasium-classic_control', exact=True) }}
-        - if: osx or (linux and not aarch64)
+        - if: osx or (linux and not ppc64le)
           then: ${{ pin_subpackage('gymnasium-jax', exact=True) }}
         - ${{ pin_subpackage('gymnasium-mujoco', exact=True) }}
         # see below
@@ -149,7 +149,9 @@ outputs:
   - package:
       name: gymnasium-jax
     build:
-      skip: linux and aarch64
+      skip:
+        - linux and ppc64le
+        - win
     requirements:
       host:
         - python ==${{ python_min }}
