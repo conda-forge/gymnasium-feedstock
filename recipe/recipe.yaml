@@ -149,8 +149,7 @@ outputs:
   - package:
       name: gymnasium-jax
     build:
-      skip:
-        - linux and aarch64
+      skip: linux and aarch64
     requirements:
       host:
         - python ==${{ python_min }}
@@ -202,8 +201,7 @@ outputs:
   - package:
       name: gymnasium-torch
     build:
-      skip:
-        - ppc64le
+      skip: ppc64le
     requirements:
       host:
         - python ==${{ python_min }}
