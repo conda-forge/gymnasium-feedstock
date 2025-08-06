@@ -77,7 +77,11 @@ outputs:
             - tests/
         requirements:
           run:
-            - python ${{ python_min }}.*
+            - if: not (linux and aarch64)
+              then: ${{ python_min }}.*
+            # older python version on linux aarch64 force a broken jaxlib version
+            - if: linux and aarch64
+              then: python 3.11
             - mock
             - pytest
             - scipy
