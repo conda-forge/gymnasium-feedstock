@@ -78,7 +78,7 @@ outputs:
         requirements:
           run:
             - if: not (linux and aarch64)
-              then: ${{ python_min }}.*
+              then: python ${{ python_min }}.*
             # older python version on linux aarch64 force a broken jaxlib version
             - if: linux and aarch64
               then: python 3.11
