@@ -17,8 +17,6 @@ source:
 
 build:
   number: 2
-  python:
-    version_independent: true
 
 outputs:
   - package:
@@ -29,14 +27,14 @@ outputs:
       build:
         - if: build_platform != target_platform
           then:
-            - python ==${{ python_min }}
+            - python
             - cross-python_${{ target_platform }}
       host:
-        - python ==${{ python_min }}
+        - python
         - pip
         - setuptools
       run:
-        - python >=${{ python_min }}
+        - python
         - numpy >=1.21.0
         - cloudpickle >=1.2.0
         - importlib-metadata >=4.8.0
@@ -51,9 +49,9 @@ outputs:
       name: gymnasium-all
     requirements:
       host:
-        - python ==${{ python_min }}
+        - python
       run:
-        - python >=${{ python_min }}
+        - python
         - ${{ pin_subpackage('gymnasium-atari', exact=True) }}
         - ${{ pin_subpackage('gymnasium-box2d', exact=True) }}
         - ${{ pin_subpackage('gymnasium-classic_control', exact=True) }}
@@ -68,7 +66,6 @@ outputs:
         - ${{ pin_subpackage('gymnasium-other', exact=True) }}
     tests:
       - python:
-          python_version: ${{ python_min }}.*
           pip_check: true
           imports:
             - gymnasium
@@ -79,10 +76,7 @@ outputs:
         requirements:
           run:
             - if: not (linux and aarch64)
-              then: python ${{ python_min }}.*
-            # older python version on linux aarch64 force a broken jaxlib version
-            - if: linux and aarch64
-              then: python 3.11
+              then: python
             - mock
             - pytest
             - scipy
@@ -103,9 +97,9 @@ outputs:
       name: gymnasium-atari
     requirements:
       host:
-        - python ==${{ python_min }}
+        - python
       run:
-        - python >=${{ python_min }}
+        - python
         - ${{ pin_subpackage('gymnasium', exact=True) }}
         - ale-py >=0.9
     tests:
@@ -116,15 +110,14 @@ outputs:
       name: gymnasium-box2d
     requirements:
       host:
-        - python ==${{ python_min }}
+        - python
       run:
-        - python >=${{ python_min }}
+        - python
         - ${{ pin_subpackage('gymnasium', exact=True) }}
         - box2d-py 2.3.*
         - pygame >=2.1.3
     tests:
       - python:
-          python_version: ${{ python_min }}.*
           imports:
             - gymnasium.envs.box2d
 
@@ -132,14 +125,13 @@ outputs:
       name: gymnasium-classic-control
     requirements:
       host:
-        - python ==${{ python_min }}
+        - python
       run:
-        - python >=${{ python_min }}
+        - python
         - ${{ pin_subpackage('gymnasium', exact=True) }}
         - pygame >=2.1.3
     tests:
       - python:
-          python_version: ${{ python_min }}.*
           imports:
             - gymnasium.envs.classic_control
 
@@ -147,13 +139,12 @@ outputs:
       name: gymnasium-classic_control
     requirements:
       host:
-        - python ==${{ python_min }}
+        - python
       run:
-        - python >=${{ python_min }}
+        - python
         - ${{ pin_subpackage('gymnasium-classic-control', exact=True) }}
     tests:
       - python:
-          python_version: ${{ python_min }}.*
           imports:
             - gymnasium.envs.classic_control
 
@@ -165,16 +156,15 @@ outputs:
         - win
     requirements:
       host:
-        - python ==${{ python_min }}
+        - python
       run:
-        - python >=${{ python_min }}
+        - python
         - ${{ pin_subpackage('gymnasium', exact=True) }}
         - jax >= 0.4.0
         - jaxlib >= 0.4.0
         - flax >= 0.5.0
     tests:
       - python:
-          python_version: ${{ python_min }}.*
           imports:
             - gymnasium.wrappers.jax_to_numpy
 
@@ -182,15 +172,14 @@ outputs:
       name: gymnasium-mujoco
     requirements:
       host:
-        - python ==${{ python_min }}
+        - python
       run:
-        - python >=${{ python_min }}
+        - python
         - ${{ pin_subpackage('gymnasium', exact=True) }}
         - mujoco-python >=2.1.5
         - imageio >=2.14.1
     tests:
       - python:
-          python_version: ${{ python_min }}.*
           imports:
             - gymnasium.envs.mujoco
 
@@ -202,15 +191,14 @@ outputs:
       skip: true
     requirements:
       host:
-        - python ==${{ python_min }}
+        - python
       run:
-        - python >=${{ python_min }}
+        - python
         - ${{ pin_subpackage('gymnasium', exact=True) }}
         - mujoco-py >=2.1,<2.2
         - imageio >=2.14.1
     tests:
       - python:
-          python_version: ${{ python_min }}.*
           imports:
             - gymnasium.envs.mujoco
 
@@ -220,14 +208,13 @@ outputs:
       skip: ppc64le
     requirements:
       host:
-        - python ==${{ python_min }}
+        - python
       run:
-        - python >=${{ python_min }}
+        - python
         - ${{ pin_subpackage('gymnasium', exact=True) }}
         - pytorch >= 1.0.0
     tests:
       - python:
-          python_version: ${{ python_min }}.*
           imports:
             - gymnasium.wrappers.numpy_to_torch
 
@@ -235,14 +222,13 @@ outputs:
       name: gymnasium-toy-text
     requirements:
       host:
-        - python ==${{ python_min }}
+        - python
       run:
-        - python >=${{ python_min }}
+        - python
         - ${{ pin_subpackage('gymnasium', exact=True) }}
         - pygame >=2.1.3
     tests:
       - python:
-          python_version: ${{ python_min }}.*
           imports:
             - gymnasium.envs.toy_text
 
@@ -250,13 +236,12 @@ outputs:
       name: gymnasium-toy_text
     requirements:
       host:
-        - python ==${{ python_min }}
+        - python
       run:
-        - python >=${{ python_min }}
+        - python
         - ${{ pin_subpackage('gymnasium-toy-text', exact=True) }}
     tests:
       - python:
-          python_version: ${{ python_min }}.*
           imports:
             - gymnasium.envs.toy_text
 
@@ -264,9 +249,9 @@ outputs:
       name: gymnasium-other
     requirements:
       host:
-        - python ==${{ python_min }}
+        - python
       run:
-        - python >=${{ python_min }}
+        - python
         - ${{ pin_subpackage('gymnasium', exact=True) }}
         - moviepy >=1.0
         - matplotlib-base >=3.0
