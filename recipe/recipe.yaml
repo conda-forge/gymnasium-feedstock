@@ -46,6 +46,7 @@ outputs:
       - python:
           imports:
             - gymnasium
+
   - package:
       name: gymnasium-all
     requirements:
@@ -97,6 +98,7 @@ outputs:
             then: scripts/test.sh
           - if: win
             then: scripts/test.bat
+
   - package:
       name: gymnasium-atari
     requirements:
@@ -109,6 +111,7 @@ outputs:
     tests:
       - script:
           - echo "tested in ale-py"
+
   - package:
       name: gymnasium-box2d
     requirements:
@@ -124,6 +127,7 @@ outputs:
           python_version: ${{ python_min }}.*
           imports:
             - gymnasium.envs.box2d
+
   - package:
       name: gymnasium-classic-control
     requirements:
@@ -138,6 +142,7 @@ outputs:
           python_version: ${{ python_min }}.*
           imports:
             - gymnasium.envs.classic_control
+
   - package:
       name: gymnasium-classic_control
     requirements:
@@ -151,6 +156,7 @@ outputs:
           python_version: ${{ python_min }}.*
           imports:
             - gymnasium.envs.classic_control
+
   - package:
       name: gymnasium-jax
     build:
@@ -171,6 +177,7 @@ outputs:
           python_version: ${{ python_min }}.*
           imports:
             - gymnasium.wrappers.jax_to_numpy
+
   - package:
       name: gymnasium-mujoco
     requirements:
@@ -186,6 +193,7 @@ outputs:
           python_version: ${{ python_min }}.*
           imports:
             - gymnasium.envs.mujoco
+
   - package:
       name: gymnasium-mujoco-py
     build:
@@ -205,6 +213,7 @@ outputs:
           python_version: ${{ python_min }}.*
           imports:
             - gymnasium.envs.mujoco
+
   - package:
       name: gymnasium-torch
     build:
@@ -221,6 +230,7 @@ outputs:
           python_version: ${{ python_min }}.*
           imports:
             - gymnasium.wrappers.numpy_to_torch
+
   - package:
       name: gymnasium-toy-text
     requirements:
@@ -235,6 +245,7 @@ outputs:
           python_version: ${{ python_min }}.*
           imports:
             - gymnasium.envs.toy_text
+
   - package:
       name: gymnasium-toy_text
     requirements:
@@ -248,6 +259,7 @@ outputs:
           python_version: ${{ python_min }}.*
           imports:
             - gymnasium.envs.toy_text
+
   - package:
       name: gymnasium-other
     requirements:
