@@ -90,54 +90,80 @@ outputs:
             # issues with newest numpy
             - numpy <2.3
         script:
-          # Various test skips with conditions - this would be a complex conversion
-          # from jinja2 templates to the new format, keeping the pytest command as-is
+          - pip check
           - if: unix
             then: |
-              export tests_to_skip="_not_a_real_test"
+              tests_to_skip="_not_a_real_test"
               # These test requires mujoco_py, see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124082918
-              tests_to_skip="${tests_to_skip} or test_verify_info_x_position"
-              tests_to_skip="${tests_to_skip} or test_verify_info_y_position"
-              tests_to_skip="${tests_to_skip} or test_verify_info_x_velocity"
-              tests_to_skip="${tests_to_skip} or test_verify_info_y_velocity"
-              tests_to_skip="${tests_to_skip} or test_verify_info_xy_velocity_xpos"
-              tests_to_skip="${tests_to_skip} or test_verify_info_xy_velocity_com"
-              tests_to_skip="${tests_to_skip} or test_set_state"
-              tests_to_skip="${tests_to_skip} or test_distance_from_origin_info"
-              tests_to_skip="${tests_to_skip} or test_model_sensors"
-              tests_to_skip="${tests_to_skip} or test_reset_noise_scale"
+              tests_to_skip="$tests_to_skip or test_verify_info_x_position"
+              tests_to_skip="$tests_to_skip or test_verify_info_y_position"
+              tests_to_skip="$tests_to_skip or test_verify_info_x_velocity"
+              tests_to_skip="$tests_to_skip or test_verify_info_y_velocity"
+              tests_to_skip="$tests_to_skip or test_verify_info_xy_velocity_xpos"
+              tests_to_skip="$tests_to_skip or test_verify_info_xy_velocity_com"
+              tests_to_skip="$tests_to_skip or test_set_state"
+              tests_to_skip="$tests_to_skip or test_distance_from_origin_info"
+              tests_to_skip="$tests_to_skip or test_model_sensors"
+              tests_to_skip="$tests_to_skip or test_reset_noise_scale"
               # These tests do not run on CI due to missing window system, see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124183361
-              tests_to_skip="${tests_to_skip} or test_max_geom_attribute[10-human]"
-              tests_to_skip="${tests_to_skip} or test_max_geom_attribute[100-human]"
-              tests_to_skip="${tests_to_skip} or test_max_geom_attribute[1000-human]"
-              tests_to_skip="${tests_to_skip} or test_max_geom_attribute[10000-human]"
-          - if: osx
+              tests_to_skip="$tests_to_skip or test_max_geom_attribute[10-human]"
+              tests_to_skip="$tests_to_skip or test_max_geom_attribute[100-human]"
+              tests_to_skip="$tests_to_skip or test_max_geom_attribute[1000-human]"
+              tests_to_skip="$tests_to_skip or test_max_geom_attribute[10000-human]"
+          - if: win
+            then: |
+              set tests_to_skip="_not_a_real_test"
+              REM These test requires mujoco_py, see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124082918
+              set tests_to_skip=%tests_to_skip% or test_verify_info_x_position
+              set tests_to_skip=%tests_to_skip% or test_verify_info_y_position
+              set tests_to_skip=%tests_to_skip% or test_verify_info_x_velocity
+              set tests_to_skip=%tests_to_skip% or test_verify_info_y_velocity
+              set tests_to_skip=%tests_to_skip% or test_verify_info_xy_velocity_xpos
+              set tests_to_skip=%tests_to_skip% or test_verify_info_xy_velocity_com
+              set tests_to_skip=%tests_to_skip% or test_set_state
+              set tests_to_skip=%tests_to_skip% or test_distance_from_origin_info
+              set tests_to_skip=%tests_to_skip% or test_model_sensors
+              set tests_to_skip=%tests_to_skip% or test_reset_noise_scale
+              REM These tests do not run on CI due to missing window system, see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124183361
+              set tests_to_skip=%tests_to_skip% or test_max_geom_attribute[10-human]
+              set tests_to_skip=%tests_to_skip% or test_max_geom_attribute[100-human]
+              set tests_to_skip=%tests_to_skip% or test_max_geom_attribute[1000-human]
+              set tests_to_skip=%tests_to_skip% or test_max_geom_attribute[10000-human]
+          - if: unix and osx
             then: |
               # the following pygame tests are skipped [according to selector], because there is no rendering support during the CI build
-              tests_to_skip="${tests_to_skip} or test_human_rendering"
-              tests_to_skip="${tests_to_skip} or test_keyboard_irrelevant_keydown_event"
-              tests_to_skip="${tests_to_skip} or test_keyboard_keyup_event"
-              tests_to_skip="${tests_to_skip} or test_keyboard_quit_event"
-              tests_to_skip="${tests_to_skip} or test_keyboard_relevant_keydown_event"
-              tests_to_skip="${tests_to_skip} or test_no_error_warnings[env0]"
-              tests_to_skip="${tests_to_skip} or test_no_error_warnings[env1]"
-              tests_to_skip="${tests_to_skip} or test_play_loop_real_env"
-              tests_to_skip="${tests_to_skip} or test_play_relevant_keys"
-              tests_to_skip="${tests_to_skip} or test_pygame_quit_event"
-              tests_to_skip="${tests_to_skip} or test_video_size_no_zoom"
-              tests_to_skip="${tests_to_skip} or test_video_size_zoom"
-          - if: osx or win
+              tests_to_skip="$tests_to_skip or test_human_rendering"
+              tests_to_skip="$tests_to_skip or test_keyboard_irrelevant_keydown_event"
+              tests_to_skip="$tests_to_skip or test_keyboard_keyup_event"
+              tests_to_skip="$tests_to_skip or test_keyboard_quit_event"
+              tests_to_skip="$tests_to_skip or test_keyboard_relevant_keydown_event"
+              tests_to_skip="$tests_to_skip or test_no_error_warnings[env0]"
+              tests_to_skip="$tests_to_skip or test_no_error_warnings[env1]"
+              tests_to_skip="$tests_to_skip or test_play_loop_real_env"
+              tests_to_skip="$tests_to_skip or test_play_relevant_keys"
+              tests_to_skip="$tests_to_skip or test_pygame_quit_event"
+              tests_to_skip="$tests_to_skip or test_video_size_no_zoom"
+              tests_to_skip="$tests_to_skip or test_video_size_zoom"
+          - if: unix and osx
             then: |
               # The following tests fail as for mujoco the osmesa rendering backend is only supported on Linux
               # See https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2428691450
-              tests_to_skip="${tests_to_skip} or test_offscreen_viewer_custom_dimensions"
-              tests_to_skip="${tests_to_skip} or test_max_geom_attribute"
-              tests_to_skip="${tests_to_skip} or test_camera_id"
-              tests_to_skip="${tests_to_skip} or test_num_envs_screen_size"
+              tests_to_skip="$tests_to_skip or test_offscreen_viewer_custom_dimensions"
+              tests_to_skip="$tests_to_skip or test_max_geom_attribute"
+              tests_to_skip="$tests_to_skip or test_camera_id"
+              tests_to_skip="$tests_to_skip or test_num_envs_screen_size"
+          - if: win
+            then: |
+              REM The following tests fail as for mujoco the osmesa rendering backend is only supported on Linux
+              REM See https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2428691450
+              set tests_to_skip=%tests_to_skip% or test_offscreen_viewer_custom_dimensions
+              set tests_to_skip=%tests_to_skip% or test_max_geom_attribute
+              set tests_to_skip=%tests_to_skip% or test_camera_id
+              set tests_to_skip=%tests_to_skip% or test_num_envs_screen_size
           - if: aarch64
             then: |
               # See https://github.com/conda-forge/gymnasium-feedstock/pull/32#issuecomment-2031810613
-              tests_to_skip="${tests_to_skip} or test_render_modes"
+              tests_to_skip="$tests_to_skip or test_render_modes"
           # atary test are skipped as we do not have atari ROMs in the CI
           # See https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2404215826
           - if: unix
@@ -155,7 +181,10 @@ outputs:
           # see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124699477
           - if: osx
             then: export SDL_VIDEODRIVER="dummy"
-          - pytest -v tests/ -k "not (${tests_to_skip})"
+          - if: unix
+            then: pytest -v tests/ -k "not ($tests_to_skip)"
+          - if: win
+            then: pytest -v tests/ -k "not (%tests_to_skip%)"
 
   - package:
       name: gymnasium-atari
