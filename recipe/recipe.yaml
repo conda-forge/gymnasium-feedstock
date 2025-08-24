@@ -177,9 +177,9 @@ outputs:
           # Remove once test run under a glibc 2.32 distro
           - if: aarch64
             then: export LD_PRELOAD=libgomp.so.1
-          # Ensure that pygame tests pass on osx,
+          # Ensure that pygame tests pass on unix,
           # see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124699477
-          - if: osx
+          - if: unix
             then: export SDL_VIDEODRIVER="dummy"
           - if: unix
             then: pytest -v tests/ -k "not ($tests_to_skip)"
