@@ -16,6 +16,8 @@ source:
 
 build:
   number: 2
+  # missing support for 3.13 in ray
+  skip: match(python, ">3.12")
 
 outputs:
   - package:
@@ -41,8 +43,6 @@ outputs:
         - farama-notifications
         - jax-jumpy >=1.0.0
         - typing_extensions >=4.3.0
-        - if: py<=39
-          then: importlib_metadata >=4.8.1
     tests:
       - python:
           imports:
@@ -87,6 +87,8 @@ outputs:
             # Just for tests a newer version of mujoco is required
             # See https://github.com/Farama-Foundation/Gymnasium/pull/1221#issuecomment-2424973616
             - mujoco-python >=2.3.6
+            # issues with newest numpy
+            - numpy <2.3
         script:
           # Various test skips with conditions - this would be a complex conversion
           # from jinja2 templates to the new format, keeping the pytest command as-is
