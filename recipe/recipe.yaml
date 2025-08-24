@@ -13,6 +13,8 @@ source:
   patches:
     # backport https://github.com/Farama-Foundation/Gymnasium/pull/1222
     - patches/1222.patch
+    # backport https://github.com/Farama-Foundation/Gymnasium/pull/1361
+    - patches/1361.patch
 
 build:
   number: 2
@@ -171,10 +173,6 @@ outputs:
           # need to specify opengl driver on linux to enable offscreen rendering in MuJoCo
           - if: linux
             then: export MUJOCO_GL="osmesa"
-          # Workaround for https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2429842932
-          # Remove once test run under a glibc 2.32 distro
-          - if: aarch64
-            then: export LD_PRELOAD=libgomp.so.1
           # Ensure that pygame tests pass on unix,
           # see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124699477
           - if: unix
