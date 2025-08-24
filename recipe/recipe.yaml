@@ -80,7 +80,7 @@ outputs:
             - pip
             - if: osx or linux64
               then:
-                - jax >=0.4
+                - jax >=0.4,<0.7.0
                 - flax >=0.5.0
             - if: linux
               then: mesalib
@@ -173,6 +173,9 @@ outputs:
           # need to specify opengl driver on linux to enable offscreen rendering in MuJoCo
           - if: linux
             then: export MUJOCO_GL="osmesa"
+          # Workaround for https://github.com/conda-forge/gymnasium-feedstock/pull/50#issuecomment-3218125344
+          - if: aarch64
+            then: export LD_PRELOAD=libGLdispatch.so.0
           # Ensure that pygame tests pass on unix,
           # see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124699477
           - if: unix
