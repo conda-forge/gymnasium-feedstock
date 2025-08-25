@@ -125,6 +125,8 @@ outputs:
               set tests_to_skip=%tests_to_skip% or test_max_geom_attribute[100-human]
               set tests_to_skip=%tests_to_skip% or test_max_geom_attribute[1000-human]
               set tests_to_skip=%tests_to_skip% or test_max_geom_attribute[10000-human]
+              REM started with v1.1.1
+              set tests_to_skip=%tests_to_skip% or test_rgbd_tuple"
           - if: unix and osx
             then: |
               # the following pygame tests are skipped [according to selector], because there is no rendering support during the CI build
@@ -148,6 +150,8 @@ outputs:
               tests_to_skip="$tests_to_skip or test_max_geom_attribute"
               tests_to_skip="$tests_to_skip or test_camera_id"
               tests_to_skip="$tests_to_skip or test_num_envs_screen_size"
+              # started with v1.1.1
+              tests_to_skip="$tests_to_skip or test_rgbd_tuple"
           - if: win
             then: |
               REM The following tests fail as for mujoco the osmesa rendering backend is only supported on Linux
