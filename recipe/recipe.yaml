@@ -50,6 +50,7 @@ outputs:
         - python
       run:
         - python
+        - ${{ pin_subpackage('gymnasium-array-api', exact=True) }}
         - ${{ pin_subpackage('gymnasium-atari', exact=True) }}
         - ${{ pin_subpackage('gymnasium-box2d', exact=True) }}
         - ${{ pin_subpackage('gymnasium-classic_control', exact=True) }}
@@ -183,6 +184,20 @@ outputs:
             then: pytest -v tests/ --durations=50 -k "not (%tests_to_skip%)"
 
   - package:
+      name: gymnasium-array-api
+    requirements:
+      host:
+        - python
+      run:
+        - python
+        - ${{ pin_subpackage('gymnasium', exact=True) }}
+        - array-api-compat >=1.11
+        - numpy >=2.1
+    tests:
+      - script:
+          - echo "tested in gymnasium-all"
+
+  - package:
       name: gymnasium-atari
     requirements:
       host:
@@ -236,8 +251,10 @@ outputs:
       run:
         - python
         - ${{ pin_subpackage('gymnasium', exact=True) }}
+        - array-api-compat >=1.11
         - flax >=0.5.0
         - jax >=0.4.16
+        - numpy >=2.1
     tests:
       - script:
           - echo "tested in gymnasium-all"
@@ -252,6 +269,7 @@ outputs:
         - ${{ pin_subpackage('gymnasium', exact=True) }}
         - mujoco-python >=2.1.5
         - imageio >=2.14.1
+        - packaging
     tests:
       - python:
           imports:
@@ -270,6 +288,8 @@ outputs:
       run:
         - python
         - ${{ pin_subpackage('gymnasium', exact=True) }}
+        - array-api-compat >=1.11
+        - numpy >=2.1
         - pytorch >=1.13
     tests:
       - script:
