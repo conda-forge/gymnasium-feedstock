@@ -77,10 +77,6 @@ outputs:
             - scipy
             - dill
             - pip
-            - if: osx
-              then:
-                # flaky segfaults with newer jax on osx
-                - jax >=0.4,<0.5
             - if: linux
               then: mesalib
             # Just for tests a newer version of mujoco is required
@@ -181,8 +177,7 @@ outputs:
           # see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124699477
           - if: unix
             then: export SDL_VIDEODRIVER="dummy"
-            # osx needs old jax to avoid segfaults, which is not available on 3.13
-          - if: unix and not (osx and match(python, ">=3.13"))
+          - if: unix
             then: pytest -v tests/ --durations=50 -k "not ($tests_to_skip)"
           - if: win
             then: pytest -v tests/ --durations=50 -k "not (%tests_to_skip%)"
