@@ -177,9 +177,9 @@ outputs:
           - if: unix
             then: export SDL_VIDEODRIVER="dummy"
           - if: unix
-            then: pytest -v tests/ -k "not ($tests_to_skip)"
+            then: pytest -v tests/ --durations=50 -k "not ($tests_to_skip)"
           - if: win
-            then: pytest -v tests/ -k "not (%tests_to_skip%)"
+            then: pytest -v tests/ --durations=50 -k "not (%tests_to_skip%)"
 
   - package:
       name: gymnasium-atari
