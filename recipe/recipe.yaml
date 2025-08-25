@@ -76,17 +76,15 @@ outputs:
             - scipy
             - dill
             - pip
-            - if: (target_platform == "osx-64" or target_platform == "linux-64") and match(python, "<3.13")
+            - if: unix and not ppc64le
               then:
-                - jax >=0.4,<0.5.0
+                - jax >=0.4
                 - flax >=0.5.0
             - if: linux
               then: mesalib
             # Just for tests a newer version of mujoco is required
             # See https://github.com/Farama-Foundation/Gymnasium/pull/1221#issuecomment-2424973616
             - mujoco-python >=2.3.6
-            # issues with newest numpy
-            - numpy <2.3
         script:
           - pip check
           - if: unix
