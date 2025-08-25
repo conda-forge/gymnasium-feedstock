@@ -83,7 +83,7 @@ outputs:
             - if: osx
               then:
                 # flaky segfaults with newer jax on osx
-                - jax <0.6
+                - jax <0.5
             - if: linux
               then: mesalib
             # Just for tests a newer version of mujoco is required
