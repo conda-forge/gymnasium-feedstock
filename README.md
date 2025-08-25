@@ -50,10 +50,10 @@ Current build status
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_python3.9.____cpython</td>
+              <td>linux_64_python3.13.____cp313</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=18284&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gymnasium-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_python3.9.____cpython" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gymnasium-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_python3.13.____cp313" alt="variant">
                 </a>
               </td>
             </tr><tr>
@@ -78,10 +78,10 @@ Current build status
                 </a>
               </td>
             </tr><tr>
-              <td>linux_aarch64_python3.9.____cpython</td>
+              <td>linux_aarch64_python3.13.____cp313</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=18284&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gymnasium-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_python3.9.____cpython" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gymnasium-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_python3.13.____cp313" alt="variant">
                 </a>
               </td>
             </tr><tr>
@@ -106,10 +106,10 @@ Current build status
                 </a>
               </td>
             </tr><tr>
-              <td>linux_ppc64le_python3.9.____cpython</td>
+              <td>linux_ppc64le_python3.13.____cp313</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=18284&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gymnasium-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_python3.9.____cpython" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gymnasium-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_python3.13.____cp313" alt="variant">
                 </a>
               </td>
             </tr><tr>
@@ -134,10 +134,10 @@ Current build status
                 </a>
               </td>
             </tr><tr>
-              <td>osx_64_python3.9.____cpython</td>
+              <td>osx_64_python3.13.____cp313</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=18284&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gymnasium-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_python3.9.____cpython" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gymnasium-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_python3.13.____cp313" alt="variant">
                 </a>
               </td>
             </tr><tr>
@@ -162,10 +162,10 @@ Current build status
                 </a>
               </td>
             </tr><tr>
-              <td>osx_arm64_python3.9.____cpython</td>
+              <td>osx_arm64_python3.13.____cp313</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=18284&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gymnasium-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_python3.9.____cpython" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gymnasium-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_python3.13.____cp313" alt="variant">
                 </a>
               </td>
             </tr><tr>
@@ -190,10 +190,10 @@ Current build status
                 </a>
               </td>
             </tr><tr>
-              <td>win_64_python3.9.____cpython</td>
+              <td>win_64_python3.13.____cp313</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=18284&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gymnasium-feedstock?branchName=main&jobName=win&configuration=win%20win_64_python3.9.____cpython" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gymnasium-feedstock?branchName=main&jobName=win&configuration=win%20win_64_python3.13.____cp313" alt="variant">
                 </a>
               </td>
             </tr>
@@ -213,10 +213,10 @@ Current release info
 | [![Conda Recipe](https://img.shields.io/badge/recipe-gymnasium--all-green.svg)](https://anaconda.org/conda-forge/gymnasium-all) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gymnasium-all.svg)](https://anaconda.org/conda-forge/gymnasium-all) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gymnasium-all.svg)](https://anaconda.org/conda-forge/gymnasium-all) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gymnasium-all.svg)](https://anaconda.org/conda-forge/gymnasium-all) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-gymnasium--atari-green.svg)](https://anaconda.org/conda-forge/gymnasium-atari) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gymnasium-atari.svg)](https://anaconda.org/conda-forge/gymnasium-atari) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gymnasium-atari.svg)](https://anaconda.org/conda-forge/gymnasium-atari) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gymnasium-atari.svg)](https://anaconda.org/conda-forge/gymnasium-atari) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-gymnasium--box2d-green.svg)](https://anaconda.org/conda-forge/gymnasium-box2d) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gymnasium-box2d.svg)](https://anaconda.org/conda-forge/gymnasium-box2d) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gymnasium-box2d.svg)](https://anaconda.org/conda-forge/gymnasium-box2d) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gymnasium-box2d.svg)](https://anaconda.org/conda-forge/gymnasium-box2d) |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-gymnasium--classic_control-green.svg)](https://anaconda.org/conda-forge/gymnasium-classic_control) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gymnasium-classic_control.svg)](https://anaconda.org/conda-forge/gymnasium-classic_control) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gymnasium-classic_control.svg)](https://anaconda.org/conda-forge/gymnasium-classic_control) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gymnasium-classic_control.svg)](https://anaconda.org/conda-forge/gymnasium-classic_control) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-gymnasium--classic__control-green.svg)](https://anaconda.org/conda-forge/gymnasium-classic_control) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gymnasium-classic_control.svg)](https://anaconda.org/conda-forge/gymnasium-classic_control) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gymnasium-classic_control.svg)](https://anaconda.org/conda-forge/gymnasium-classic_control) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gymnasium-classic_control.svg)](https://anaconda.org/conda-forge/gymnasium-classic_control) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-gymnasium--mujoco-green.svg)](https://anaconda.org/conda-forge/gymnasium-mujoco) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gymnasium-mujoco.svg)](https://anaconda.org/conda-forge/gymnasium-mujoco) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gymnasium-mujoco.svg)](https://anaconda.org/conda-forge/gymnasium-mujoco) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gymnasium-mujoco.svg)](https://anaconda.org/conda-forge/gymnasium-mujoco) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-gymnasium--other-green.svg)](https://anaconda.org/conda-forge/gymnasium-other) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gymnasium-other.svg)](https://anaconda.org/conda-forge/gymnasium-other) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gymnasium-other.svg)](https://anaconda.org/conda-forge/gymnasium-other) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gymnasium-other.svg)](https://anaconda.org/conda-forge/gymnasium-other) |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-gymnasium--toy_text-green.svg)](https://anaconda.org/conda-forge/gymnasium-toy_text) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gymnasium-toy_text.svg)](https://anaconda.org/conda-forge/gymnasium-toy_text) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gymnasium-toy_text.svg)](https://anaconda.org/conda-forge/gymnasium-toy_text) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gymnasium-toy_text.svg)](https://anaconda.org/conda-forge/gymnasium-toy_text) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-gymnasium--toy__text-green.svg)](https://anaconda.org/conda-forge/gymnasium-toy_text) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gymnasium-toy_text.svg)](https://anaconda.org/conda-forge/gymnasium-toy_text) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gymnasium-toy_text.svg)](https://anaconda.org/conda-forge/gymnasium-toy_text) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gymnasium-toy_text.svg)](https://anaconda.org/conda-forge/gymnasium-toy_text) |
 
 Installing gymnasium
 ====================
