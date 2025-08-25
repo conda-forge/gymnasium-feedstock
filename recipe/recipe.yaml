@@ -11,10 +11,8 @@ source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v${{ version }}.tar.gz
   sha256: 7883c878c1ed5bcc7a5ba621ac859d23be9a26baea9f2a42596dc072143b0619
   patches:
-    # backport https://github.com/Farama-Foundation/Gymnasium/pull/1222
-    - patches/1222.patch
     # backport https://github.com/Farama-Foundation/Gymnasium/pull/1361
-    - patches/1361.patch
+    - patches/0001-Fix-jax-0.6.0-regression-in-jax_to_numpy-and-jax_to_.patch
 
 build:
   number: 0
