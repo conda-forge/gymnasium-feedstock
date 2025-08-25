@@ -15,7 +15,7 @@ source:
     - patches/0001-Fix-jax-0.6.0-regression-in-jax_to_numpy-and-jax_to_.patch
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - package:
@@ -57,10 +57,14 @@ outputs:
         - ${{ pin_subpackage('gymnasium-box2d', exact=True) }}
         - ${{ pin_subpackage('gymnasium-classic_control', exact=True) }}
         - ${{ pin_subpackage('gymnasium-mujoco', exact=True) }}
-        # see below
-        # - {{ pin_subpackage('gymnasium-mujoco_py', exact=True) }}
         - ${{ pin_subpackage('gymnasium-toy_text', exact=True) }}
         - ${{ pin_subpackage('gymnasium-other', exact=True) }}
+        - if: not (win or ppc64le)
+          then:
+            - ${{ pin_subpackage('gymnasium-jax', exact=True) }}
+        - if: not ppc64le
+          then:
+            - ${{ pin_subpackage('gymnasium-torch', exact=True) }}
     tests:
       - python:
           pip_check: true
@@ -76,15 +80,10 @@ outputs:
             - scipy
             - dill
             - pip
-            - if: linux and not ppc64le
-              then:
-                - jax >=0.4
-                - flax >=0.5.0
-            - if: osx and match(python, "<3.13")
+            - if: osx
               then:
                 # flaky segfaults with newer jax on osx
                 - jax >=0.4,<0.5
-                - flax >=0.5.0
             - if: linux
               then: mesalib
             # Just for tests a newer version of mujoco is required
@@ -185,7 +184,8 @@ outputs:
           # see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124699477
           - if: unix
             then: export SDL_VIDEODRIVER="dummy"
-          - if: unix
+            # osx needs old jax to avoid segfaults, which is not available on 3.13
+          - if: unix and not (osx and match(python, ">=3.13"))
             then: pytest -v tests/ --durations=50 -k "not ($tests_to_skip)"
           - if: win
             then: pytest -v tests/ --durations=50 -k "not (%tests_to_skip%)"
@@ -234,6 +234,23 @@ outputs:
             - gymnasium.envs.classic_control
 
   - package:
+      name: gymnasium-jax
+    build:
+      # jax not available on ppc/win
+      skip: ppc64le or win
+    requirements:
+      host:
+        - python
+      run:
+        - python
+        - ${{ pin_subpackage('gymnasium', exact=True) }}
+        - flax >=0.5.0
+        - jax >=0.4.16
+    tests:
+      - script:
+          - echo "tested in gymnasium-all"
+
+  - package:
       name: gymnasium-mujoco
     requirements:
       host:
@@ -248,24 +265,23 @@ outputs:
           imports:
             - gymnasium.envs.mujoco
 
+  # gymnasium-mujoco_py intentionally not included due to license of https://github.com/openai/mujoco-py
+
   - package:
-      name: gymnasium-mujoco_py
+      name: gymnasium-torch
     build:
-      # we currently don't have https://github.com/openai/mujoco-py
-      # in conda-forge, and it'll be replaced by mujoco anyway
-      skip: true
+      # current pytorch not available on ppc
+      skip: ppc64le
     requirements:
       host:
         - python
       run:
         - python
         - ${{ pin_subpackage('gymnasium', exact=True) }}
-        - mujoco-py >=2.1,<2.2
-        - imageio >=2.14.1
+        - pytorch >=1.13
     tests:
-      - python:
-          imports:
-            - gymnasium.envs.mujoco
+      - script:
+          - echo "tested in gymnasium-all"
 
   - package:
       name: gymnasium-toy_text
@@ -293,8 +309,7 @@ outputs:
         - matplotlib >=3.0
         - moviepy >=1.0
         - py-opencv >=3.0
-        - if: unix and not ppc64le
-          then: pytorch >=1.0
+        - seaborn >=0.13
     tests:
       - script:
           - echo "no tests"
