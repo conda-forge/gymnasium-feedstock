@@ -57,8 +57,6 @@ outputs:
         - ${{ pin_subpackage('gymnasium-box2d', exact=True) }}
         - ${{ pin_subpackage('gymnasium-classic_control', exact=True) }}
         - ${{ pin_subpackage('gymnasium-mujoco', exact=True) }}
-        # see below
-        # - {{ pin_subpackage('gymnasium-mujoco_py', exact=True) }}
         - ${{ pin_subpackage('gymnasium-toy_text', exact=True) }}
         - ${{ pin_subpackage('gymnasium-other', exact=True) }}
     tests:
@@ -248,24 +246,7 @@ outputs:
           imports:
             - gymnasium.envs.mujoco
 
-  - package:
-      name: gymnasium-mujoco_py
-    build:
-      # we currently don't have https://github.com/openai/mujoco-py
-      # in conda-forge, and it'll be replaced by mujoco anyway
-      skip: true
-    requirements:
-      host:
-        - python
-      run:
-        - python
-        - ${{ pin_subpackage('gymnasium', exact=True) }}
-        - mujoco-py >=2.1,<2.2
-        - imageio >=2.14.1
-    tests:
-      - python:
-          imports:
-            - gymnasium.envs.mujoco
+  # gymnasium-mujoco_py intentionally not included due to license of https://github.com/openai/mujoco-py
 
   - package:
       name: gymnasium-toy_text
