@@ -76,14 +76,15 @@ outputs:
             - scipy
             - dill
             - pip
-            - if: unix and not ppc64le
+            - if: linux and not ppc64le
               then:
                 - jax >=0.4
                 - flax >=0.5.0
-            - if: osx
+            - if: osx and match(python, "<3.13")
               then:
                 # flaky segfaults with newer jax on osx
-                - jax <0.5
+                - jax >=0.4,<0.5
+                - flax >=0.5.0
             - if: linux
               then: mesalib
             # Just for tests a newer version of mujoco is required
