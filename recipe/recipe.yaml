@@ -1,7 +1,7 @@
 schema_version: 1
 
 context:
-  version: 1.0.0
+  version: 1.1.1
 
 recipe:
   name: gymnasium-split
@@ -9,15 +9,13 @@ recipe:
 
 source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v${{ version }}.tar.gz
-  sha256: d61a54c70d1960a0b64c63fe87edc30a0bac09551c27d8d94c36c54bf5fae5d9
+  sha256: 7883c878c1ed5bcc7a5ba621ac859d23be9a26baea9f2a42596dc072143b0619
   patches:
-    # backport https://github.com/Farama-Foundation/Gymnasium/pull/1222
-    - patches/1222.patch
     # backport https://github.com/Farama-Foundation/Gymnasium/pull/1361
-    - patches/1361.patch
+    - patches/0001-Fix-jax-0.6.0-regression-in-jax_to_numpy-and-jax_to_.patch
 
 build:
-  number: 2
+  number: 0
 
 outputs:
   - package:
@@ -78,17 +76,20 @@ outputs:
             - scipy
             - dill
             - pip
-            - if: (target_platform == "osx-64" or target_platform == "linux-64") and match(python, "<3.13")
+            - if: linux and not ppc64le
               then:
-                - jax >=0.4,<0.5.0
+                - jax >=0.4
+                - flax >=0.5.0
+            - if: osx and match(python, "<3.13")
+              then:
+                # flaky segfaults with newer jax on osx
+                - jax >=0.4,<0.5
                 - flax >=0.5.0
             - if: linux
               then: mesalib
             # Just for tests a newer version of mujoco is required
             # See https://github.com/Farama-Foundation/Gymnasium/pull/1221#issuecomment-2424973616
             - mujoco-python >=2.3.6
-            # issues with newest numpy
-            - numpy <2.3
         script:
           - pip check
           - if: unix
@@ -129,7 +130,15 @@ outputs:
               set tests_to_skip=%tests_to_skip% or test_max_geom_attribute[100-human]
               set tests_to_skip=%tests_to_skip% or test_max_geom_attribute[1000-human]
               set tests_to_skip=%tests_to_skip% or test_max_geom_attribute[10000-human]
-          - if: unix and osx
+              REM The following tests fail as for mujoco the osmesa rendering backend is only supported on Linux
+              REM See https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2428691450
+              set tests_to_skip=%tests_to_skip% or test_offscreen_viewer_custom_dimensions
+              set tests_to_skip=%tests_to_skip% or test_max_geom_attribute
+              set tests_to_skip=%tests_to_skip% or test_camera_id
+              set tests_to_skip=%tests_to_skip% or test_num_envs_screen_size
+              REM started with v1.1.1
+              set tests_to_skip=%tests_to_skip% or test_rgbd_tuple"
+          - if: osx
             then: |
               # the following pygame tests are skipped [according to selector], because there is no rendering support during the CI build
               tests_to_skip="$tests_to_skip or test_human_rendering"
@@ -144,26 +153,22 @@ outputs:
               tests_to_skip="$tests_to_skip or test_pygame_quit_event"
               tests_to_skip="$tests_to_skip or test_video_size_no_zoom"
               tests_to_skip="$tests_to_skip or test_video_size_zoom"
-          - if: unix and osx
-            then: |
               # The following tests fail as for mujoco the osmesa rendering backend is only supported on Linux
               # See https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2428691450
               tests_to_skip="$tests_to_skip or test_offscreen_viewer_custom_dimensions"
               tests_to_skip="$tests_to_skip or test_max_geom_attribute"
               tests_to_skip="$tests_to_skip or test_camera_id"
               tests_to_skip="$tests_to_skip or test_num_envs_screen_size"
-          - if: win
-            then: |
-              REM The following tests fail as for mujoco the osmesa rendering backend is only supported on Linux
-              REM See https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2428691450
-              set tests_to_skip=%tests_to_skip% or test_offscreen_viewer_custom_dimensions
-              set tests_to_skip=%tests_to_skip% or test_max_geom_attribute
-              set tests_to_skip=%tests_to_skip% or test_camera_id
-              set tests_to_skip=%tests_to_skip% or test_num_envs_screen_size
+              # started with v1.1.1
+              tests_to_skip="$tests_to_skip or test_rgbd_tuple"
           - if: aarch64
             then: |
               # See https://github.com/conda-forge/gymnasium-feedstock/pull/32#issuecomment-2031810613
               tests_to_skip="$tests_to_skip or test_render_modes"
+          - if: aarch64 or ppc64le
+            then: |
+              # parametrized test that's extremely long-running in emulation (1-2h for all combinations)
+              tests_to_skip="$tests_to_skip or test_num_envs_screen_size"
           # atary test are skipped as we do not have atari ROMs in the CI
           # See https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2404215826
           - if: unix
@@ -181,9 +186,9 @@ outputs:
           - if: unix
             then: export SDL_VIDEODRIVER="dummy"
           - if: unix
-            then: pytest -v tests/ -k "not ($tests_to_skip)"
+            then: pytest -v tests/ --durations=50 -k "not ($tests_to_skip)"
           - if: win
-            then: pytest -v tests/ -k "not (%tests_to_skip%)"
+            then: pytest -v tests/ --durations=50 -k "not (%tests_to_skip%)"
 
   - package:
       name: gymnasium-atari
