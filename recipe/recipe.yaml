@@ -80,6 +80,10 @@ outputs:
               then:
                 - jax >=0.4
                 - flax >=0.5.0
+            - if: osx
+              then:
+                # flaky segfaults with newer jax on osx
+                - jax <0.7
             - if: linux
               then: mesalib
             # Just for tests a newer version of mujoco is required
