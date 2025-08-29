@@ -1,7 +1,7 @@
 schema_version: 1
 
 context:
-  version: 1.1.1
+  version: 1.2.0
 
 recipe:
   name: gymnasium-split
@@ -9,13 +9,12 @@ recipe:
 
 source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v${{ version }}.tar.gz
-  sha256: 7883c878c1ed5bcc7a5ba621ac859d23be9a26baea9f2a42596dc072143b0619
+  sha256: 4b1952813ce4425a39487670d964999d06f9cb89b6e84e72aa68e8af3afc2d74
   patches:
-    # backport https://github.com/Farama-Foundation/Gymnasium/pull/1361
-    - patches/0001-Fix-jax-0.6.0-regression-in-jax_to_numpy-and-jax_to_.patch
+    - patches/1441.patch
 
 build:
-  number: 1
+  number: 0
 
 outputs:
   - package:
@@ -53,6 +52,7 @@ outputs:
         - python
       run:
         - python
+        - ${{ pin_subpackage('gymnasium-array-api', exact=True) }}
         - ${{ pin_subpackage('gymnasium-atari', exact=True) }}
         - ${{ pin_subpackage('gymnasium-box2d', exact=True) }}
         - ${{ pin_subpackage('gymnasium-classic_control', exact=True) }}
@@ -80,10 +80,6 @@ outputs:
             - scipy
             - dill
             - pip
-            - if: osx
-              then:
-                # flaky segfaults with newer jax on osx
-                - jax >=0.4,<0.5
             - if: linux
               then: mesalib
             # Just for tests a newer version of mujoco is required
@@ -184,11 +180,24 @@ outputs:
           # see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124699477
           - if: unix
             then: export SDL_VIDEODRIVER="dummy"
-            # osx needs old jax to avoid segfaults, which is not available on 3.13
-          - if: unix and not (osx and match(python, ">=3.13"))
+          - if: unix
             then: pytest -v tests/ --durations=50 -k "not ($tests_to_skip)"
           - if: win
             then: pytest -v tests/ --durations=50 -k "not (%tests_to_skip%)"
+
+  - package:
+      name: gymnasium-array-api
+    requirements:
+      host:
+        - python
+      run:
+        - python
+        - ${{ pin_subpackage('gymnasium', exact=True) }}
+        - array-api-compat >=1.11
+        - numpy >=2.1
+    tests:
+      - script:
+          - echo "tested in gymnasium-all"
 
   - package:
       name: gymnasium-atari
@@ -244,8 +253,10 @@ outputs:
       run:
         - python
         - ${{ pin_subpackage('gymnasium', exact=True) }}
+        - array-api-compat >=1.11
         - flax >=0.5.0
         - jax >=0.4.16
+        - numpy >=2.1
     tests:
       - script:
           - echo "tested in gymnasium-all"
@@ -260,6 +271,7 @@ outputs:
         - ${{ pin_subpackage('gymnasium', exact=True) }}
         - mujoco-python >=2.1.5
         - imageio >=2.14.1
+        - packaging
     tests:
       - python:
           imports:
@@ -278,6 +290,8 @@ outputs:
       run:
         - python
         - ${{ pin_subpackage('gymnasium', exact=True) }}
+        - array-api-compat >=1.11
+        - numpy >=2.1
         - pytorch >=1.13
     tests:
       - script:
