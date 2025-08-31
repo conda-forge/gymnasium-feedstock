@@ -130,9 +130,9 @@ outputs:
               set tests_to_skip=%tests_to_skip% or test_camera_id
               set tests_to_skip=%tests_to_skip% or test_num_envs_screen_size
               REM started with v1.1.1
-              set tests_to_skip=%tests_to_skip% or test_rgbd_tuple"
+              set tests_to_skip=%tests_to_skip% or test_rgbd_tuple
               REM started with v1.2.0
-              set tests_to_skip=%tests_to_skip% or test_add_markers"
+              set tests_to_skip=%tests_to_skip% or test_add_markers
           - if: osx
             then: |
               # the following pygame tests are skipped [according to selector], because there is no rendering support during the CI build
