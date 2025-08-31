@@ -80,8 +80,6 @@ outputs:
             - scipy
             - dill
             - pip
-            - if: linux
-              then: mesalib
             # Just for tests a newer version of mujoco is required
             # See https://github.com/Farama-Foundation/Gymnasium/pull/1221#issuecomment-2424973616
             - mujoco-python >=2.3.6
@@ -125,7 +123,7 @@ outputs:
               set tests_to_skip=%tests_to_skip% or test_max_geom_attribute[100-human]
               set tests_to_skip=%tests_to_skip% or test_max_geom_attribute[1000-human]
               set tests_to_skip=%tests_to_skip% or test_max_geom_attribute[10000-human]
-              REM The following tests fail as for mujoco the osmesa rendering backend is only supported on Linux
+              REM The following tests fail as for mujoco the headless egl rendering backend is only supported on Linux
               REM See https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2428691450
               set tests_to_skip=%tests_to_skip% or test_offscreen_viewer_custom_dimensions
               set tests_to_skip=%tests_to_skip% or test_max_geom_attribute
@@ -133,6 +131,8 @@ outputs:
               set tests_to_skip=%tests_to_skip% or test_num_envs_screen_size
               REM started with v1.1.1
               set tests_to_skip=%tests_to_skip% or test_rgbd_tuple"
+              REM started with v1.2.0
+              set tests_to_skip=%tests_to_skip% or test_add_markers"
           - if: osx
             then: |
               # the following pygame tests are skipped [according to selector], because there is no rendering support during the CI build
@@ -148,7 +148,7 @@ outputs:
               tests_to_skip="$tests_to_skip or test_pygame_quit_event"
               tests_to_skip="$tests_to_skip or test_video_size_no_zoom"
               tests_to_skip="$tests_to_skip or test_video_size_zoom"
-              # The following tests fail as for mujoco the osmesa rendering backend is only supported on Linux
+              # The following tests fail as for mujoco the egl headless rendering backend is only supported on Linux
               # See https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2428691450
               tests_to_skip="$tests_to_skip or test_offscreen_viewer_custom_dimensions"
               tests_to_skip="$tests_to_skip or test_max_geom_attribute"
@@ -156,6 +156,8 @@ outputs:
               tests_to_skip="$tests_to_skip or test_num_envs_screen_size"
               # started with v1.1.1
               tests_to_skip="$tests_to_skip or test_rgbd_tuple"
+              # started with v1.2.0
+              tests_to_skip="$tests_to_skip or test_add_markers"
           - if: aarch64
             then: |
               # See https://github.com/conda-forge/gymnasium-feedstock/pull/32#issuecomment-2031810613
@@ -172,7 +174,7 @@ outputs:
             then: del tests\\wrappers\\test_atari_preprocessing.py
           # need to specify opengl driver on linux to enable offscreen rendering in MuJoCo
           - if: linux
-            then: export MUJOCO_GL="osmesa"
+            then: export MUJOCO_GL="egl"
           # Workaround for https://github.com/conda-forge/gymnasium-feedstock/pull/50#issuecomment-3218125344
           - if: aarch64
             then: export LD_PRELOAD=libGLdispatch.so.0
