@@ -1,7 +1,7 @@
 schema_version: 1
 
 context:
-  version: 1.1.1
+  version: 1.2.0
 
 recipe:
   name: gymnasium-split
@@ -9,13 +9,12 @@ recipe:
 
 source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v${{ version }}.tar.gz
-  sha256: 7883c878c1ed5bcc7a5ba621ac859d23be9a26baea9f2a42596dc072143b0619
+  sha256: 4b1952813ce4425a39487670d964999d06f9cb89b6e84e72aa68e8af3afc2d74
   patches:
-    # backport https://github.com/Farama-Foundation/Gymnasium/pull/1361
-    - patches/0001-Fix-jax-0.6.0-regression-in-jax_to_numpy-and-jax_to_.patch
+    - patches/1441.patch
 
 build:
-  number: 1
+  number: 0
 
 outputs:
   - package:
@@ -53,6 +52,7 @@ outputs:
         - python
       run:
         - python
+        - ${{ pin_subpackage('gymnasium-array-api', exact=True) }}
         - ${{ pin_subpackage('gymnasium-atari', exact=True) }}
         - ${{ pin_subpackage('gymnasium-box2d', exact=True) }}
         - ${{ pin_subpackage('gymnasium-classic_control', exact=True) }}
@@ -80,12 +80,6 @@ outputs:
             - scipy
             - dill
             - pip
-            - if: osx
-              then:
-                # flaky segfaults with newer jax on osx
-                - jax >=0.4,<0.5
-            - if: linux
-              then: mesalib
             # Just for tests a newer version of mujoco is required
             # See https://github.com/Farama-Foundation/Gymnasium/pull/1221#issuecomment-2424973616
             - mujoco-python >=2.3.6
@@ -129,14 +123,16 @@ outputs:
               set tests_to_skip=%tests_to_skip% or test_max_geom_attribute[100-human]
               set tests_to_skip=%tests_to_skip% or test_max_geom_attribute[1000-human]
               set tests_to_skip=%tests_to_skip% or test_max_geom_attribute[10000-human]
-              REM The following tests fail as for mujoco the osmesa rendering backend is only supported on Linux
+              REM The following tests fail as for mujoco the headless egl rendering backend is only supported on Linux
               REM See https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2428691450
               set tests_to_skip=%tests_to_skip% or test_offscreen_viewer_custom_dimensions
               set tests_to_skip=%tests_to_skip% or test_max_geom_attribute
               set tests_to_skip=%tests_to_skip% or test_camera_id
               set tests_to_skip=%tests_to_skip% or test_num_envs_screen_size
               REM started with v1.1.1
-              set tests_to_skip=%tests_to_skip% or test_rgbd_tuple"
+              set tests_to_skip=%tests_to_skip% or test_rgbd_tuple
+              REM started with v1.2.0
+              set tests_to_skip=%tests_to_skip% or test_add_markers
           - if: osx
             then: |
               # the following pygame tests are skipped [according to selector], because there is no rendering support during the CI build
@@ -152,7 +148,7 @@ outputs:
               tests_to_skip="$tests_to_skip or test_pygame_quit_event"
               tests_to_skip="$tests_to_skip or test_video_size_no_zoom"
               tests_to_skip="$tests_to_skip or test_video_size_zoom"
-              # The following tests fail as for mujoco the osmesa rendering backend is only supported on Linux
+              # The following tests fail as for mujoco the egl headless rendering backend is only supported on Linux
               # See https://github.com/conda-forge/gymnasium-feedstock/pull/41#issuecomment-2428691450
               tests_to_skip="$tests_to_skip or test_offscreen_viewer_custom_dimensions"
               tests_to_skip="$tests_to_skip or test_max_geom_attribute"
@@ -160,6 +156,8 @@ outputs:
               tests_to_skip="$tests_to_skip or test_num_envs_screen_size"
               # started with v1.1.1
               tests_to_skip="$tests_to_skip or test_rgbd_tuple"
+              # started with v1.2.0
+              tests_to_skip="$tests_to_skip or test_add_markers"
           - if: aarch64
             then: |
               # See https://github.com/conda-forge/gymnasium-feedstock/pull/32#issuecomment-2031810613
@@ -176,7 +174,7 @@ outputs:
             then: del tests\\wrappers\\test_atari_preprocessing.py
           # need to specify opengl driver on linux to enable offscreen rendering in MuJoCo
           - if: linux
-            then: export MUJOCO_GL="osmesa"
+            then: export MUJOCO_GL="egl"
           # Workaround for https://github.com/conda-forge/gymnasium-feedstock/pull/50#issuecomment-3218125344
           - if: aarch64
             then: export LD_PRELOAD=libGLdispatch.so.0
@@ -184,11 +182,24 @@ outputs:
           # see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124699477
           - if: unix
             then: export SDL_VIDEODRIVER="dummy"
-            # osx needs old jax to avoid segfaults, which is not available on 3.13
-          - if: unix and not (osx and match(python, ">=3.13"))
+          - if: unix
             then: pytest -v tests/ --durations=50 -k "not ($tests_to_skip)"
           - if: win
             then: pytest -v tests/ --durations=50 -k "not (%tests_to_skip%)"
+
+  - package:
+      name: gymnasium-array-api
+    requirements:
+      host:
+        - python
+      run:
+        - python
+        - ${{ pin_subpackage('gymnasium', exact=True) }}
+        - array-api-compat >=1.11
+        - numpy >=2.1
+    tests:
+      - script:
+          - echo "tested in gymnasium-all"
 
   - package:
       name: gymnasium-atari
@@ -244,8 +255,10 @@ outputs:
       run:
         - python
         - ${{ pin_subpackage('gymnasium', exact=True) }}
+        - array-api-compat >=1.11
         - flax >=0.5.0
         - jax >=0.4.16
+        - numpy >=2.1
     tests:
       - script:
           - echo "tested in gymnasium-all"
@@ -260,6 +273,7 @@ outputs:
         - ${{ pin_subpackage('gymnasium', exact=True) }}
         - mujoco-python >=2.1.5
         - imageio >=2.14.1
+        - packaging
     tests:
       - python:
           imports:
@@ -278,6 +292,8 @@ outputs:
       run:
         - python
         - ${{ pin_subpackage('gymnasium', exact=True) }}
+        - array-api-compat >=1.11
+        - numpy >=2.1
         - pytorch >=1.13
     tests:
       - script:
