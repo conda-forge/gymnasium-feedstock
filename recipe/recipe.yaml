@@ -106,6 +106,8 @@ outputs:
               tests_to_skip="$tests_to_skip or test_max_geom_attribute[100-human]"
               tests_to_skip="$tests_to_skip or test_max_geom_attribute[1000-human]"
               tests_to_skip="$tests_to_skip or test_max_geom_attribute[10000-human]"
+              # started with v1.2.0
+              tests_to_skip="$tests_to_skip or test_add_markers"
           - if: win
             then: |
               set tests_to_skip="_not_a_real_test"
@@ -158,8 +160,6 @@ outputs:
               tests_to_skip="$tests_to_skip or test_num_envs_screen_size"
               # started with v1.1.1
               tests_to_skip="$tests_to_skip or test_rgbd_tuple"
-              # started with v1.2.0
-              tests_to_skip="$tests_to_skip or test_add_markers"
           - if: aarch64
             then: |
               # See https://github.com/conda-forge/gymnasium-feedstock/pull/32#issuecomment-2031810613
