@@ -59,7 +59,10 @@ outputs:
         - ${{ pin_subpackage('gymnasium-mujoco', exact=True) }}
         - ${{ pin_subpackage('gymnasium-toy_text', exact=True) }}
         - ${{ pin_subpackage('gymnasium-other', exact=True) }}
-        - if: not (win or ppc64le)
+        # jax is not available on Windows or linux ppc64le, and
+        # is not supported upstream in macos intel, see 
+        # https://github.com/conda-forge/gymnasium-feedstock/pull/47#issuecomment-3280671648
+        - if: not (win or ppc64le or (osx and x86_64))
           then:
             - ${{ pin_subpackage('gymnasium-jax', exact=True) }}
         - if: not ppc64le
@@ -249,8 +252,10 @@ outputs:
   - package:
       name: gymnasium-jax
     build:
-      # jax not available on ppc/win
-      skip: ppc64le or win
+      # jax is not available on Windows or linux ppc64le, and
+      # is not supported upstream in macos intel, see 
+      # https://github.com/conda-forge/gymnasium-feedstock/pull/47#issuecomment-3280671648
+      skip: ppc64le or win or (osx and x86_64)
     requirements:
       host:
         - python
