@@ -1,7 +1,7 @@
 schema_version: 1
 
 context:
-  version: 1.1.1
+  version: 1.2.0
 
 recipe:
   name: gymnasium-split
@@ -9,13 +9,12 @@ recipe:
 
 source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v${{ version }}.tar.gz
-  sha256: 7883c878c1ed5bcc7a5ba621ac859d23be9a26baea9f2a42596dc072143b0619
+  sha256: 4b1952813ce4425a39487670d964999d06f9cb89b6e84e72aa68e8af3afc2d74
   patches:
-    # backport https://github.com/Farama-Foundation/Gymnasium/pull/1361
-    - patches/0001-Fix-jax-0.6.0-regression-in-jax_to_numpy-and-jax_to_.patch
+    - patches/1441.patch
 
 build:
-  number: 1
+  number: 0
 
 outputs:
   - package:
@@ -53,13 +52,17 @@ outputs:
         - python
       run:
         - python
+        - ${{ pin_subpackage('gymnasium-array-api', exact=True) }}
         - ${{ pin_subpackage('gymnasium-atari', exact=True) }}
         - ${{ pin_subpackage('gymnasium-box2d', exact=True) }}
         - ${{ pin_subpackage('gymnasium-classic_control', exact=True) }}
         - ${{ pin_subpackage('gymnasium-mujoco', exact=True) }}
         - ${{ pin_subpackage('gymnasium-toy_text', exact=True) }}
         - ${{ pin_subpackage('gymnasium-other', exact=True) }}
-        - if: not (win or ppc64le)
+        # jax is not available on Windows or linux ppc64le, and
+        # is not supported upstream in macos intel, see 
+        # https://github.com/conda-forge/gymnasium-feedstock/pull/47#issuecomment-3280671648
+        - if: not (win or ppc64le or (osx and x86_64))
           then:
             - ${{ pin_subpackage('gymnasium-jax', exact=True) }}
         - if: not ppc64le
@@ -80,15 +83,11 @@ outputs:
             - scipy
             - dill
             - pip
-            - if: osx
-              then:
-                # flaky segfaults with newer jax on osx
-                - jax >=0.4,<0.5
-            - if: linux
-              then: mesalib
             # Just for tests a newer version of mujoco is required
             # See https://github.com/Farama-Foundation/Gymnasium/pull/1221#issuecomment-2424973616
             - mujoco-python >=2.3.6
+            # EGL is still not working fine, let's use osmesa for now
+            - mesalib <25.1
         script:
           - pip check
           - if: unix
@@ -110,6 +109,8 @@ outputs:
               tests_to_skip="$tests_to_skip or test_max_geom_attribute[100-human]"
               tests_to_skip="$tests_to_skip or test_max_geom_attribute[1000-human]"
               tests_to_skip="$tests_to_skip or test_max_geom_attribute[10000-human]"
+              # started with v1.2.0
+              tests_to_skip="$tests_to_skip or test_add_markers"
           - if: win
             then: |
               set tests_to_skip="_not_a_real_test"
@@ -136,7 +137,9 @@ outputs:
               set tests_to_skip=%tests_to_skip% or test_camera_id
               set tests_to_skip=%tests_to_skip% or test_num_envs_screen_size
               REM started with v1.1.1
-              set tests_to_skip=%tests_to_skip% or test_rgbd_tuple"
+              set tests_to_skip=%tests_to_skip% or test_rgbd_tuple
+              REM started with v1.2.0
+              set tests_to_skip=%tests_to_skip% or test_add_markers
           - if: osx
             then: |
               # the following pygame tests are skipped [according to selector], because there is no rendering support during the CI build
@@ -184,11 +187,24 @@ outputs:
           # see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124699477
           - if: unix
             then: export SDL_VIDEODRIVER="dummy"
-            # osx needs old jax to avoid segfaults, which is not available on 3.13
-          - if: unix and not (osx and match(python, ">=3.13"))
+          - if: unix
             then: pytest -v tests/ --durations=50 -k "not ($tests_to_skip)"
           - if: win
             then: pytest -v tests/ --durations=50 -k "not (%tests_to_skip%)"
+
+  - package:
+      name: gymnasium-array-api
+    requirements:
+      host:
+        - python
+      run:
+        - python
+        - ${{ pin_subpackage('gymnasium', exact=True) }}
+        - array-api-compat >=1.11
+        - numpy >=2.1
+    tests:
+      - script:
+          - echo "tested in gymnasium-all"
 
   - package:
       name: gymnasium-atari
@@ -236,16 +252,20 @@ outputs:
   - package:
       name: gymnasium-jax
     build:
-      # jax not available on ppc/win
-      skip: ppc64le or win
+      # jax is not available on Windows or linux ppc64le, and
+      # is not supported upstream in macos intel, see 
+      # https://github.com/conda-forge/gymnasium-feedstock/pull/47#issuecomment-3280671648
+      skip: ppc64le or win or (osx and x86_64)
     requirements:
       host:
         - python
       run:
         - python
         - ${{ pin_subpackage('gymnasium', exact=True) }}
+        - array-api-compat >=1.11
         - flax >=0.5.0
         - jax >=0.4.16
+        - numpy >=2.1
     tests:
       - script:
           - echo "tested in gymnasium-all"
@@ -260,6 +280,7 @@ outputs:
         - ${{ pin_subpackage('gymnasium', exact=True) }}
         - mujoco-python >=2.1.5
         - imageio >=2.14.1
+        - packaging
     tests:
       - python:
           imports:
@@ -278,6 +299,8 @@ outputs:
       run:
         - python
         - ${{ pin_subpackage('gymnasium', exact=True) }}
+        - array-api-compat >=1.11
+        - numpy >=2.1
         - pytorch >=1.13
     tests:
       - script:

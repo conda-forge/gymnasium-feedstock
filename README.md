@@ -211,6 +211,7 @@ Current release info
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-gymnasium-green.svg)](https://anaconda.org/conda-forge/gymnasium) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gymnasium.svg)](https://anaconda.org/conda-forge/gymnasium) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gymnasium.svg)](https://anaconda.org/conda-forge/gymnasium) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gymnasium.svg)](https://anaconda.org/conda-forge/gymnasium) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-gymnasium--all-green.svg)](https://anaconda.org/conda-forge/gymnasium-all) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gymnasium-all.svg)](https://anaconda.org/conda-forge/gymnasium-all) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gymnasium-all.svg)](https://anaconda.org/conda-forge/gymnasium-all) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gymnasium-all.svg)](https://anaconda.org/conda-forge/gymnasium-all) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-gymnasium--array--api-green.svg)](https://anaconda.org/conda-forge/gymnasium-array-api) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gymnasium-array-api.svg)](https://anaconda.org/conda-forge/gymnasium-array-api) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gymnasium-array-api.svg)](https://anaconda.org/conda-forge/gymnasium-array-api) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gymnasium-array-api.svg)](https://anaconda.org/conda-forge/gymnasium-array-api) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-gymnasium--atari-green.svg)](https://anaconda.org/conda-forge/gymnasium-atari) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gymnasium-atari.svg)](https://anaconda.org/conda-forge/gymnasium-atari) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gymnasium-atari.svg)](https://anaconda.org/conda-forge/gymnasium-atari) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gymnasium-atari.svg)](https://anaconda.org/conda-forge/gymnasium-atari) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-gymnasium--box2d-green.svg)](https://anaconda.org/conda-forge/gymnasium-box2d) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gymnasium-box2d.svg)](https://anaconda.org/conda-forge/gymnasium-box2d) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gymnasium-box2d.svg)](https://anaconda.org/conda-forge/gymnasium-box2d) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gymnasium-box2d.svg)](https://anaconda.org/conda-forge/gymnasium-box2d) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-gymnasium--classic__control-green.svg)](https://anaconda.org/conda-forge/gymnasium-classic_control) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gymnasium-classic_control.svg)](https://anaconda.org/conda-forge/gymnasium-classic_control) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gymnasium-classic_control.svg)](https://anaconda.org/conda-forge/gymnasium-classic_control) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gymnasium-classic_control.svg)](https://anaconda.org/conda-forge/gymnasium-classic_control) |
@@ -230,16 +231,16 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `gymnasium, gymnasium-all, gymnasium-atari, gymnasium-box2d, gymnasium-classic_control, gymnasium-jax, gymnasium-mujoco, gymnasium-other, gymnasium-torch, gymnasium-toy_text` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `gymnasium, gymnasium-all, gymnasium-array-api, gymnasium-atari, gymnasium-box2d, gymnasium-classic_control, gymnasium-jax, gymnasium-mujoco, gymnasium-other, gymnasium-torch, gymnasium-toy_text` can be installed with `conda`:
 
 ```
-conda install gymnasium gymnasium-all gymnasium-atari gymnasium-box2d gymnasium-classic_control gymnasium-jax gymnasium-mujoco gymnasium-other gymnasium-torch gymnasium-toy_text
+conda install gymnasium gymnasium-all gymnasium-array-api gymnasium-atari gymnasium-box2d gymnasium-classic_control gymnasium-jax gymnasium-mujoco gymnasium-other gymnasium-torch gymnasium-toy_text
 ```
 
 or with `mamba`:
 
 ```
-mamba install gymnasium gymnasium-all gymnasium-atari gymnasium-box2d gymnasium-classic_control gymnasium-jax gymnasium-mujoco gymnasium-other gymnasium-torch gymnasium-toy_text
+mamba install gymnasium gymnasium-all gymnasium-array-api gymnasium-atari gymnasium-box2d gymnasium-classic_control gymnasium-jax gymnasium-mujoco gymnasium-other gymnasium-torch gymnasium-toy_text
 ```
 
 It is possible to list all of the versions of `gymnasium` available on your platform with `conda`:
