@@ -1,7 +1,7 @@
 schema_version: 1
 
 context:
-  version: 1.2.0
+  version: "1.2.1"
 
 recipe:
   name: gymnasium-split
@@ -9,9 +9,7 @@ recipe:
 
 source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v${{ version }}.tar.gz
-  sha256: 4b1952813ce4425a39487670d964999d06f9cb89b6e84e72aa68e8af3afc2d74
-  patches:
-    - patches/1441.patch
+  sha256: 10bf5eb274859e187eba94a05f2e8fd318483b0551980930985bdf4ff487372f
 
 build:
   number: 0
@@ -186,9 +184,9 @@ outputs:
           # Ensure that pygame tests pass on unix,
           # see https://github.com/conda-forge/gymnasium-feedstock/pull/36#issuecomment-2124699477
           - if: unix
-            then: export SDL_VIDEODRIVER="dummy"
-          - if: unix
-            then: pytest -v tests/ --durations=50 -k "not ($tests_to_skip)"
+            then:
+              - export SDL_VIDEODRIVER="dummy"
+              - pytest -v tests/ --durations=50 -k "not ($tests_to_skip)"
           - if: win
             then: pytest -v tests/ --durations=50 -k "not (%tests_to_skip%)"
 
