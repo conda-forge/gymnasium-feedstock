@@ -10,8 +10,6 @@ recipe:
 source:
   url: https://github.com/Farama-Foundation/Gymnasium/archive/refs/tags/v${{ version }}.tar.gz
   sha256: 10bf5eb274859e187eba94a05f2e8fd318483b0551980930985bdf4ff487372f
-  patches:
-    - patches/1441.patch
 
 build:
   number: 0
